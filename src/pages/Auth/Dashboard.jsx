@@ -180,7 +180,7 @@ const Dashboard = () => {
                         <p className="text-[20px] sm:text-[26px] lg:text-[30px] font-bold">My Account</p>
                         <span className="text-center text-[12px] cart-access lg:text-[14px]">
                             <span>Home /</span> Account
-                            {wishlist.length}
+                            {/* {wishlist.length} */}
 
                         </span>
                     </div>
@@ -339,7 +339,7 @@ const Dashboard = () => {
                                 <p className="sm:text-[24px] text-[20px] font-medium mt-0">Order history</p>
                                 {order.map((order) => (
                                     <div key={order._id} className="rounded bg-white mb-4">
-                                        <div className="flex flex-col sm:items-center sm:flex-row order-cart-d border-t border-r border-l rounded-t justify-between p-4">
+                                        <div className="flex flex-col sm:items-center sm:flex-row order-cart-d border-t border-r border-l rounded-t border-gray-300 justify-between p-4">
                                             <div className="flex gap-14">
                                                 <div>
                                                     <div className="flex lg:flex-col">
@@ -377,7 +377,7 @@ const Dashboard = () => {
                                         </div>
 
                                         {order.cartItems.map((item) => (
-                                            <div key={item.productId} className="cart-body-child relative order-cart-d rounded-b border text-[14px] p-4 flex">
+                                            <div key={item.productId} className="cart-body-child border-gray-300 relative order-cart-d rounded-b border text-[14px] p-4 flex">
                                                 <div className="w-[100px] md:w-[120px] h-[100px] md:h-full overflow-hidden flex md:items-center">
                                                     <img className="w-[100px] h-[100px] hover:scale-105 duration-300" src={item.img} alt={item.title} />
                                                 </div>

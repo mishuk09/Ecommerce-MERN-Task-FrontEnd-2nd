@@ -16,6 +16,7 @@ import ProductPage from './pages/Productpage/ProductPage'
 import SignIn from './pages/Auth/SignIn'
 import SignUp from './pages/Auth/SignUp'
 import Dashboard from './pages/Auth/Dashboard'
+import Checkout from './pages/Cart/Checkout'
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -33,6 +34,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/checkout" element={<Checkout />} />
 
           <Route path="/faqs" element={<FAQs />} />
           <Route path="/ship" element={<ShippingReturns />} />

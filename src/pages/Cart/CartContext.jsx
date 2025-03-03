@@ -50,5 +50,5 @@ export const CartProvider = ({ children }) => {  // <-- Fixed this line
 };
 
 CartProvider.propTypes = {
-    children: PropTypes.node.isRequired, 
+    children: PropTypes.node.isRequired,
 };
