@@ -1,0 +1,521 @@
+@import "tailwindcss";
+
+
+body {
+    font-family: 'Jost', sans-serif;
+}
+
+:root {
+    --primary-color: #DB4444;
+    --category-color: #00FF66;
+}
+
+.sub-cate {
+    color: var(--category-color);
+}
+
+.buy-color {
+    background-color: var(--category-color);
+}
+
+.theme-color,
+.sell-color,
+.subscribe-btn,
+.checkout-btn,
+.signin-btn,
+.signup-btn {
+    background-color: var(--primary-color);
+}
+
+.nav-icon,
+.child-color,
+.new-price,
+.signin-btn-2 {
+    color: var(--primary-color);
+}
+
+.src-btn {
+    background-color: var(--primary-color);
+}
+
+.icon-img {
+    color: var(--primary-color);
+}
+
+
+
+.category-hover:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transition: 0.2s ease-in-out;
+
+}
+
+
+
+.category-hover:hover .cate-icon {
+    color: white;
+    transition: 0.2s ease-in-out;
+
+    /* transform: scale(1.1); */
+    /* Slight scaling effect for better UX */
+}
+
+
+
+
+
+/* footer section     */
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr 1fr;
+}
+
+@media only screen and (max-width: 1200px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* carousal arrow hiden */
+
+.react-multiple-carousel__arrow {
+    z-index: 10 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*#################################################
+####          Profile   section START           ####
+##################################################  */
+
+
+.edit-btn-2 {
+    background-color: var(--primary-color);
+
+}
+
+.profile-head {
+    /* padding-top: 3.5rem; */
+    /* padding-left: 30px; */
+    /* padding-right: 30px; */
+    display: grid;
+    grid-template-columns: 0.4fr 1.3fr;
+    grid-gap: 20px;
+}
+
+@media only screen and (max-width:768px) {
+    .profile-head {
+        /* padding-top: 3.5rem; */
+        padding-left: 30px;
+        padding-right: 30px;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 50px;
+    }
+
+}
+
+.tabs {
+    /* max-width: 600px; */
+    margin: 0 auto;
+}
+
+.tab-links {
+    margin-top: 3.5rem;
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+
+.tab-links a {
+    display: inline-block;
+    width: 100%;
+    /* height: 30px; */
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+}
+
+@media only screen and (max-width:768px) {
+    .tab-links a {
+        display: inline-block;
+        width: 100%;
+        /* height: 30px; */
+        padding: 15px 10px;
+        text-decoration: none;
+        color: #333;
+        transition: 0.3s;
+    }
+}
+
+
+
+/* .tab-links a.active {
+    background-color: #f1f5f9;
+    font-weight: 500;
+    border-radius: 7px;
+  } */
+
+/* .tab-content-2 .tab {
+    display: none;
+  } */
+
+/* .tab-content-2 .active {
+    display: block;
+  } */
+
+.tab-content-2 {
+    margin-top: 3.5rem;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    /* background: #f1f5f9;
+    border-radius: 100px 0 0 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    border: 1px solid #e5e7eb; */
+
+}
+
+@media only screen and (max-width:768px) {
+    .tab-content-2 {
+        margin-top: 3.5rem;
+        padding-left: 25px;
+        padding-right: 0px;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .tab-content-2 {
+        padding-left: 0px;
+    }
+}
+
+.order-price-c {
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.order-div {
+    background-color: #e3fadf;
+    width: 100%;
+    height: 60px;
+    color: #0c8c18;
+    font-size: 14px;
+
+}
+
+.order-div-o {
+    display: flex;
+    margin: 0 auto;
+    background-color: #e3fadf;
+    width: 100%;
+    height: 50px;
+    color: #0c8c18;
+    font-size: 14px;
+
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 20px;
+
+}
+
+.custom-table td {
+    padding-left: 20px;
+    height: 50px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    /* Add border radius to table cells */
+}
+
+.col1 {
+    width: 30%;
+}
+
+.col2 {
+    width: 70%;
+}
+
+
+.acount-btn-div {
+    height: 50px;
+    width: 230px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    /* border-radius: 50%; */
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    transition: color 0.3s, background-color 0.3s;
+
+}
+
+.acount-btn-div:hover {
+    height: 50px;
+    width: 230px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: 500;
+
+}
+
+.editbtn {
+    position: absolute;
+    bottom: 15px;
+    font-size: 12px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.editbtn-one {
+    position: absolute;
+    bottom: 15px;
+    font-size: 12px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.editbtn1 {
+    transition: color 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+.editbtn-two {
+    transition: color 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+
+.editbtn2 {
+    transition: color 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+.editbtn1:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.editbtn-two:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+
+
+.editbtn2:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+
+.order-t {
+    font-weight: 500;
+}
+
+.order-tt {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+@media only screen and (max-width:1024px) {
+    .order-child {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+}
+
+.order-child {
+    color: var(--primary-color);
+}
+
+
+
+.order-cart-d {
+    padding: 10px 20px;
+}
+
+@media only screen and (max-width:640px) {
+    .order-cart-d {
+        padding: 10px 10px;
+    }
+
+
+}
+
+.dashbord-r {
+    display: flex;
+}
+
+.add-new-a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: 1px dotted gray;
+}
+
+.personal-inout input {
+    width: 100%;
+    height: 40px;
+    border-radius: 7px;
+    border-color: rgb(194, 194, 194);
+    background-color: white;
+}
+
+
+.info-idit,
+.info-idit2,
+.info-idit3,
+.info-idit4 {
+    color: var(--secondary-color);
+    font-size: 14px;
+}
+
+
+
+
+
+
+
+#saveBtnEmail,
+#saveBtnMobile,
+#saveBtnPass,
+#saveBtn {
+    width: 100%;
+    height: 40px;
+    border-radius: 7px;
+    background-color: var(--primary-color);
+    color: white;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+#saveBtnEmail,
+#saveBtn,
+#saveBtnMobile,
+#saveBtnPass,
+#saveBtn:hover {
+    width: 100px;
+    height: 40px;
+    border-radius: 7px;
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+
+
+
+
+
+
+.wishlist-div {
+    margin-top: 3.5rem;
+}
+
+
+
+.privecy-t {
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+.head-tearms {
+    font-weight: 500;
+    font-size: 24px;
+}
+
+@media only screen and (max-width:640px) {
+    .head-tearms {
+        font-weight: 500;
+        font-size: 20px;
+    }
+}
+
+.privacy-head-div {
+    margin-top: 3.5rem;
+}
+
+.privacy-head-div .ul li {
+
+    margin: 10px;
+    padding-left: 20px;
+    text-decoration: solid;
+}
+
+.fags-div a {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+}
+
+.fags-div a:hover {
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--secondary-color);
+}
+
+
+.about-team {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    font-size: 15px;
+}
+
+.about-us-p {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    font-size: 15px;
+}
+
+@media only screen and (max-width:1024px) {
+    .about-us-p {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 30px;
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width:640px) {
+    .about-team {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 30px;
+        font-size: 15px;
+    }
+}
