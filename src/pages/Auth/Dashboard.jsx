@@ -35,7 +35,7 @@ const Dashboard = () => {
         const productIds = Object.keys(storedItems);
 
         // Fetch items from the API
-        axios.get('http://localhost:5000/items/')
+        axios.get('http://localhost:5000/items/allitem/')
             .then(response => {
                 console.log(response.data);  // Log the response data to check its structure
 

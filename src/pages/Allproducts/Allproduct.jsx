@@ -12,7 +12,7 @@ const Allproduct = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/items');
+                const response = await axios.get('http://localhost:5000/items/allitem');
                 setPosts(response.data.items);
                 setLoading(false);
             } catch (error) {
@@ -44,8 +44,8 @@ const Allproduct = () => {
             <Headline
                 headline="Explore Our Products"
                 child="Our Product's"
-                href="allproducts"
-                seemore="allproducts"
+                href="collection"
+                seemore="collection"
             />
 
             <div className="max-w-7xl mt-6 mx-auto grid grid-cols-2 md:grid-cols-5 gap-4">

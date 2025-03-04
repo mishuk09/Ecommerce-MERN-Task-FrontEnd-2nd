@@ -19,7 +19,7 @@ const ProductPage = ({ toggleCart }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/items/${id}`);
+        const response = await axios.get(`http://localhost:5000/items/allitem/${id}`);
         const productData = response.data;
         setProduct(productData.singleItem);
         setSelectedColor(productData.color?.[0] || ''); // Default to empty string if undefined

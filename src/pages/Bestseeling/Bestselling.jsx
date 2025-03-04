@@ -16,7 +16,7 @@ const Bestseeling = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/items');
+                const response = await axios.get('http://localhost:5000/items/allitem');
                 setPosts(response.data.items);
                 setLoading(false);
             } catch (error) {

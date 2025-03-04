@@ -4,6 +4,8 @@ import { Heart, SlidersHorizontal, X } from "lucide-react";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const Collection = () => {
     const [posts, setPosts] = useState([]);
@@ -20,7 +22,7 @@ const Collection = () => {
 
     // Fetch posts on mount
     useEffect(() => {
-        axios.get('http://localhost:5000/items/allitem/')
+        axios.get('http://localhost:5000/items/allitem')
             .then(response => {
                 if (Array.isArray(response.data.items)) {
                     setPosts(response.data.items); // Set posts from the 'items' key
@@ -107,7 +109,7 @@ const Collection = () => {
             <div className="text-center pt-6 pb-4 lg:pt-10">
                 <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / Weekend Edit</p>
 
-               
+
                 {/* <h1 className="text-xl lg:text-3xl filter-tittle-3  font-bold mt-2 text-center lg:text-start pl-4">Weekend Edit</h1> */}
                 <div className="flex justify-start gap-8 mt-2 mb-2 pl-4">
                     <button
@@ -223,7 +225,7 @@ const Collection = () => {
                     </div>
 
                 )}
-                <div className="container grid grid-cols-2  h-full  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mx-auto px-4">
+                <div className={`container grid grid-cols-2 ${filterOpen ? 'grid-cols-4' : 'grid-cols-5'} h-full   gap-4 md:gap-6 mx-auto px-4`}>
                     {loading ? (
                         // Display skeleton loading when data is being fetched
                         Array(15).fill(0).map((_, index) => (
@@ -243,7 +245,7 @@ const Collection = () => {
                                         <img
                                             src={product.img}
                                             alt={product.title}
-                                            className="w-full h-[200px] md:h-[250px] lg:h-[350px] object-cover transform hover:scale-110 transition-transform duration-300"
+                                            className="w-full  h-[150px] object-cover transform hover:scale-110 transition-transform duration-300"
                                         />
                                         <span className="absolute top-2 left-2 bg-gray-200 text-red-400 text-xs px-2 py-1 rounded">
                                             Sale
@@ -257,25 +259,32 @@ const Collection = () => {
                                     }}
                                     className="absolute top-2 right-2 p-2"
                                 >
-                                    <Heart size={20} className={`w-4 ${wishlist[product._id] ? 'text-red-600' : 'text-gray-400'}`} />
+                                    <FontAwesomeIcon
+                                        className={`w-4 ${wishlist[product._id] ? 'text-red-600' : 'text-gray-400'}`}
+                                        icon={faHeart}
+                                    />
                                 </button>
-                                <div className="ps-2 pb-1">
+
+                                <div className="ps-2  ">
                                     <div className="flex space-x-1 pt-2">
                                         {product.color.map(color => (
                                             <button
                                                 key={color}
                                                 aria-label={`Select ${color}`}
-                                                className="relative w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-gray hover:border-gray-500 duration-75"
+                                                className="relative w-4 h-4 md:w-6 md:h-6 rounded-full border-1 border-gray hover:border-gray-500 duration-75"
                                                 style={{ backgroundColor: color.toLowerCase() }}
                                             />
                                         ))}
                                     </div>
-                                    <h2 className=" lg:text-lg product-card__title text-start pt-1 lg:pt-3 font-semibold text-gray-900">
+                                    <h2 className="   product-card__title text-start pt-1 lg:pt-3 font-medium text-gray-900">
                                         {product.title}
                                     </h2>
                                     <div>
-                                        <span className=" lg:text-xl font-semibold">${product.newPrice}</span>
-                                        <sup className="text-sm text-gray-800">99</sup>
+                                        <div>
+                                            <span className="new-price font-medium">${product.newPrice}</span>
+                                            <span className="  line-through text-gray-500 ml-2">${product.oldPrice}</span>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +294,7 @@ const Collection = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
