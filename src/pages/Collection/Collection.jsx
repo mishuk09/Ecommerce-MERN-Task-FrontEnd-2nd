@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, SlidersHorizontal, X } from "lucide-react";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import axios from 'axios';
 
 const Collection = () => {
     const [posts, setPosts] = useState([]);
@@ -20,17 +20,27 @@ const Collection = () => {
 
     // Fetch posts on mount
     useEffect(() => {
-        axios.get('http://localhost:5000/items')
+        axios.get('http://localhost:5000/items/allitem/')
             .then(response => {
-                setPosts(response.data);
-                setFilteredPosts(response.data); // Initial set to show all products
-                setLoading(false); // Set loading to false after data is fetched
+                if (Array.isArray(response.data.items)) {
+                    setPosts(response.data.items); // Set posts from the 'items' key
+                    setFilteredPosts(response.data.items); // Set filtered posts from the same array
+                } else {
+                    console.error("Unexpected API response:", response.data);
+                    setPosts([]);
+                    setFilteredPosts([]);
+                }
+                setLoading(false);
             })
             .catch(error => {
-                console.log(error);
-                setLoading(false); // Set loading to false if there's an error
+                console.error("Error fetching data:", error);
+                setPosts([]);
+                setFilteredPosts([]);
+                setLoading(false);
             });
     }, []);
+
+
 
     const toggleFilterPanel = () => {
         setFilterOpen(!filterOpen);
@@ -61,31 +71,31 @@ const Collection = () => {
     };
 
     const applyFilters = (updatedFilters) => {
-        let newFilteredPosts = posts;
+        let newFilteredPosts = Array.isArray(posts) ? [...posts] : [];
 
         // Filter by color
         if (updatedFilters.color.length > 0) {
             newFilteredPosts = newFilteredPosts.filter(post =>
-                post.color.some(color => updatedFilters.color.includes(color.toLowerCase())) // Convert to lowercase
+                Array.isArray(post.color) && post.color.some(color => updatedFilters.color.includes(color.toLowerCase()))
             );
         }
 
         // Filter by price range
         newFilteredPosts = newFilteredPosts.filter(post =>
-            post.newPrice <= updatedFilters.priceRange[1]
+            typeof post.newPrice === 'number' && post.newPrice <= updatedFilters.priceRange[1]
         );
 
         // Filter by type
         if (updatedFilters.type.length > 0) {
             newFilteredPosts = newFilteredPosts.filter(post =>
-                updatedFilters.type.includes(post.category.toLowerCase()) // Convert to lowercase
+                typeof post.category === 'string' && updatedFilters.type.includes(post.category.toLowerCase())
             );
         }
 
         // Filter by size
         if (updatedFilters.size.length > 0) {
             newFilteredPosts = newFilteredPosts.filter(post =>
-                post.size.some(size => updatedFilters.size.includes(size.toLowerCase())) // Convert to lowercase
+                Array.isArray(post.size) && post.size.some(size => updatedFilters.size.includes(size.toLowerCase()))
             );
         }
 
@@ -93,9 +103,11 @@ const Collection = () => {
     };
 
     return (
-        <div className="container collection pb-10">
+        <div className="max-w-7xl mx-auto collection pb-10">
             <div className="text-center pt-6 pb-4 lg:pt-10">
                 <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / Weekend Edit</p>
+
+               
                 {/* <h1 className="text-xl lg:text-3xl filter-tittle-3  font-bold mt-2 text-center lg:text-start pl-4">Weekend Edit</h1> */}
                 <div className="flex justify-start gap-8 mt-2 mb-2 pl-4">
                     <button
