@@ -27,7 +27,8 @@ body {
 .subscribe-btn,
 .checkout-btn,
 .signin-btn,
-.signup-btn {
+.signup-btn,
+.add-to-cart {
     background-color: var(--primary-color);
 }
 

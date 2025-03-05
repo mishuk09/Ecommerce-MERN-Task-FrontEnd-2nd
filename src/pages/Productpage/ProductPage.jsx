@@ -19,7 +19,7 @@ const ProductPage = ({ toggleCart }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/items/allitem/${id}`);
+        const response = await axios.get(`http://localhost:5000/items/${id}`);
         const productData = response.data;
         setProduct(productData.singleItem);
         setSelectedColor(productData.color?.[0] || ''); // Default to empty string if undefined
@@ -169,7 +169,7 @@ const ProductPage = ({ toggleCart }) => {
 
               {/* Add to Cart Button */}
               <button
-                className="add-to-cart mt-10 text-white w-full px-6 py-2 rounded-lg shadow-md bg-blue-600 hover:bg-blue-700 transition duration-300"
+                className="add-to-cart mt-10 text-white w-full px-6 py-2 rounded-lg shadow-md  "
                 onClick={handleAddToCart}
               >
                 Add to Cart

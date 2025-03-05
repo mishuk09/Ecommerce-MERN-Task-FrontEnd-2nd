@@ -18,6 +18,7 @@ const Checkout = () => {
         landmark: '',
     });
     const [errors, setErrors] = useState({});
+    // eslint-disable-next-line no-unused-vars
     const [paymentMethod, setPaymentMethod] = useState('Card Payment');
     const [cardDetails, setCardDetails] = useState({ cardNumber: '', expiryDate: '', cvv: '' });
 
@@ -79,6 +80,7 @@ const Checkout = () => {
         const orderData = {
             ...formData,
             cartItems,
+            payment: true,  
             totalAmount: calculateTotal() + 100,
             paymentMethod,
             cardDetails,

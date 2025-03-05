@@ -3,24 +3,34 @@ import { useCart } from './CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import RedAlert from '../../components/RedAlert';
 
 const Cart = ({ isOpen, toggleCart }) => {
     const { cartItems, removeFromCart } = useCart();
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
 
     const handleCheckout = () => {
-        toggleCart();
-        navigate('/checkout');
+        if (cartItems.length === 0) {
+            setError(true);
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
+        } else {
+            toggleCart();
+            navigate('/checkout');
+        }
     };
 
     return (
         <>
             <div className="relative">
-              
+                {error && <RedAlert name="Your cart is empty" />}
                 <div
-                    className={`fixed top-0 right-0 w-full md:w-[500px] h-full bg-white shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'} z-50 flex flex-col`}
+                    className={`fixed top-0 right-0 w-full md:w-[500px] h-full bg-white shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'
+                        } z-50 flex flex-col`}
                 >
-                   
                     <button
                         className="absolute top-2 right-2 text-gray-600 hover:text-black"
                         onClick={toggleCart}
@@ -40,22 +50,28 @@ const Cart = ({ isOpen, toggleCart }) => {
                             />
                         </svg>
                     </button>
+
                     <div className="p-4 flex-grow overflow-y-auto">
                         <h2 className="text-lg font-semibold mb-4">Your Cart</h2>
-                        {/* Cart Items */}
                         {cartItems.length === 0 ? (
                             <p>Your cart is empty</p>
                         ) : (
                             cartItems.map((item, index) => (
                                 <div key={`${item.id}-${index}`} className="mb-4 pb-2 border-b flex gap-4">
-                                    <div className='w-'>
-                                        <img className='w-[120px] h-[100px] object-cover rounded' src={item.img} alt={item.title} />
+                                    <div>
+                                        <img
+                                            className="w-[120px] h-[100px] object-cover rounded"
+                                            src={item.img}
+                                            alt={item.title}
+                                        />
                                     </div>
-                                    <div className='w-full relative'>
-                                        <p className="font-semibold"> {item.title.split(' ').slice(0, 3).join(' ')}</p>
-                                        <p className='text-sm'>Variant: {item.color} / {item.size}</p>
-                                        <p className='text-sm'>Qty: {item.quantity}</p>
-                                        <p className="mt-2 font-bold ">$ {item.price * item.quantity}</p>
+                                    <div className="w-full relative">
+                                        <p className="font-semibold">
+                                            {item.title.split(' ').slice(0, 3).join(' ')}
+                                        </p>
+                                        <p className="text-sm">Variant: {item.color} / {item.size}</p>
+                                        <p className="text-sm">Qty: {item.quantity}</p>
+                                        <p className="mt-2 font-bold">$ {item.price * item.quantity}</p>
                                         <button
                                             onClick={() => removeFromCart(item.id, item.color, item.size)}
                                             className="text-gray-500 absolute top-0 right-2 mt-1 text-sm"
@@ -67,33 +83,34 @@ const Cart = ({ isOpen, toggleCart }) => {
                             ))
                         )}
                     </div>
-                    {/* Total and Shipping */}
+
                     <div className="border-t p-4">
                         <div className="flex justify-between">
                             <span className="font-semibold">Total</span>
-                            <span className='font-bold'>$ {cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</span>
+                            <span className="font-bold">
+                                ${' '}
+                                {cartItems.reduce(
+                                    (total, item) => total + item.price * item.quantity,
+                                    0
+                                )}
+                            </span>
                         </div>
                         <div className="flex justify-between mt-2">
                             <span className="font-semibold">Shipping</span>
                             <span>Cost will appear on checkout</span>
                         </div>
-                        <a href='/checkout'>
-                            <button
-                                onClick={handleCheckout}
-                                className='w-full h-10 checkout-btn text-white rounded-md mt-6'
-                            >
-                                Checkout
-                            </button>
-                        </a>
+
+                        <button
+                            onClick={handleCheckout}
+                            className="w-full h-10 checkout-btn text-white rounded-md mt-6"
+                        >
+                            Checkout
+                        </button>
                     </div>
                 </div>
 
-                {/* Overlay */}
                 {isOpen && (
-                    <div
-                        className="fixed inset-0 bg-black opacity-50 z-40"
-                        onClick={toggleCart}
-                    ></div>
+                    <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={toggleCart}></div>
                 )}
             </div>
         </>
@@ -101,9 +118,8 @@ const Cart = ({ isOpen, toggleCart }) => {
 };
 
 Cart.propTypes = {
-    isOpen: PropTypes.string.isRequired,
-    toggleCart: PropTypes.string.isRequired,
-
+    isOpen: PropTypes.bool.isRequired, // Fixed type from string to bool
+    toggleCart: PropTypes.func.isRequired, // Fixed type from string to function
 };
 
 export default Cart;

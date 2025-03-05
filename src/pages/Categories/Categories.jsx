@@ -2,6 +2,8 @@ import Headline from "../../components/Headline";
 import { Smartphone, Monitor, Watch, Headphones, Camera, Gamepad2 } from 'lucide-react';
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
+import { useNavigate } from "react-router";
+
 
 const items = [
     {
@@ -37,6 +39,7 @@ const items = [
 ];
 
 const Categories = () => {
+    const navigate = useNavigate();
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 1024 },
@@ -57,7 +60,7 @@ const Categories = () => {
     };
 
     return (
-        <div className="mt-20">
+        <div className="mt-20  ">
             <Headline
                 headline="Browse By Category"
                 child="Categories"
@@ -72,7 +75,7 @@ const Categories = () => {
                 containerClass="max-w-7xl mt-6 mx-auto px-0"
             >
                 {items.map(({ id, name, Icon }) => (
-                    <div key={id} className="w-full h-48 flex flex-col items-center justify-center space-y-2 p-4 border border-gray-300 rounded-sm  category-hover transition-shadow">
+                    <div key={id} onClick={() => navigate(`/collection/${name}`)} className="w-full h-48 flex flex-col items-center justify-center space-y-2 p-4 border border-gray-300 rounded-sm  category-hover transition-shadow">
                         <Icon size={42} className="text-gray-600 cate-icon " />
                         <span className="text-sm font-medium">{name}</span>
                     </div>

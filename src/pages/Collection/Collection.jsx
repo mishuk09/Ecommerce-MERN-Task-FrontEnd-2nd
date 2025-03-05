@@ -25,8 +25,10 @@ const Collection = () => {
         axios.get('http://localhost:5000/items/allitem')
             .then(response => {
                 if (Array.isArray(response.data.items)) {
-                    setPosts(response.data.items); // Set posts from the 'items' key
-                    setFilteredPosts(response.data.items); // Set filtered posts from the same array
+                    // const categoryToFilter = "headphone";  
+                    const filteredItems = response.data.items.filter(item => item.category === category);
+                    setPosts(filteredItems);  
+                    setFilteredPosts(filteredItems);  
                 } else {
                     console.error("Unexpected API response:", response.data);
                     setPosts([]);
@@ -40,7 +42,7 @@ const Collection = () => {
                 setFilteredPosts([]);
                 setLoading(false);
             });
-    }, []);
+    }, [category]);
 
 
 
@@ -107,7 +109,7 @@ const Collection = () => {
     return (
         <div className="max-w-7xl mx-auto collection pb-10">
             <div className="text-center pt-6 pb-4 lg:pt-10">
-                <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / Weekend Edit</p>
+                <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / All Products</p>
 
 
                 {/* <h1 className="text-xl lg:text-3xl filter-tittle-3  font-bold mt-2 text-center lg:text-start pl-4">Weekend Edit</h1> */}
@@ -118,11 +120,11 @@ const Collection = () => {
                     >
                         {filterOpen ? (
                             <div>
-                                <SlidersHorizontal size={20} />
+                                <SlidersHorizontal size={20} className='me-2' />
                             </div>
                         ) : (
                             <div>
-                                <X size={20} />
+                                <X size={20} className='me-2' />
                             </div>
                         )}
                         Filter
@@ -134,7 +136,7 @@ const Collection = () => {
                 {filterOpen && (
                     // <div className="w-64 bg-white p-6 rounded-lg shadow-lg  h-full">
                     <div
-                        className={`fixed top-0 left-0 h-full bg-white p-6 rounded-lg shadow-lg transition-transform transform 
+                        className={`fixed top-0 left-0 h-full bg-blue-50 p-6 rounded shadow transition-transform transform 
                         ${filterOpen ? 'translate-x-0' : '-translate-x-full'} z-50 sm:relative sm:translate-x-0 sm:block sm:w-64 lg:w-64`}
                     >
 
@@ -225,7 +227,7 @@ const Collection = () => {
                     </div>
 
                 )}
-                <div className={`container grid grid-cols-2 ${filterOpen ? 'grid-cols-4' : 'grid-cols-5'} h-full   gap-4 md:gap-6 mx-auto px-4`}>
+                <div className={`container grid grid-cols-2  ${filterOpen ? 'grid-cols-4' : 'lg:grid-cols-5'}  h-full   gap-4 md:gap-6 mx-auto px-4`}>
                     {loading ? (
                         // Display skeleton loading when data is being fetched
                         Array(15).fill(0).map((_, index) => (
