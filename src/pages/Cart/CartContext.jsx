@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 const CartContext = createContext();
 
@@ -7,43 +8,63 @@ export const useCart = () => {
     return useContext(CartContext);
 };
 
-export const CartProvider = ({ children }) => {  // <-- Fixed this line
-    const [cartItems, setCartItems] = useState(() => {
-        const storedCartItems = localStorage.getItem('cartItems');
-        return storedCartItems ? JSON.parse(storedCartItems) : [];
-    });
+export const CartProvider = ({ children }) => {
+    const [cartItems, setCartItems] = useState([]);
+
+    // Get email from localStorage
+    const email = localStorage.getItem("email");
+
+    const fetchCart = async () => {
+        if (!email) return;
+
+        try {
+            const res = await axios.post("http://localhost:5000/cart/get", { email });
+            setCartItems(res.data);
+        } catch (error) {
+            console.error("Error fetching cart:", error);
+        }
+    };
 
     useEffect(() => {
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    }, [cartItems]);
+        fetchCart();
+    }, [email]);
 
-    const addToCart = (item) => {
-        setCartItems((prevItems) => {
-            const existingItemIndex = prevItems.findIndex(
-                (prevItem) => prevItem.id === item.id && prevItem.color === item.color && prevItem.size === item.size
-            );
-            if (existingItemIndex !== -1) {
-                const updatedItems = [...prevItems];
-                updatedItems[existingItemIndex].quantity += item.quantity;
-                return updatedItems;
-            } else {
-                return [...prevItems, item];
-            }
-        });
+    const addToCart = async (item) => {
+        if (!email) return;
+
+        try {
+            await axios.post("http://localhost:5000/cart/add", { ...item, email });
+            fetchCart();
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+        }
     };
 
-    const removeFromCart = (id, color, size) => {
-        setCartItems((prevItems) =>
-            prevItems.filter(item => !(item.id === id && item.color === color && item.size === size))
-        );
+    //remove item
+    const removeFromCart = async (productId, color, size) => {
+        if (!email) return;
+
+        try {
+            await axios.post("http://localhost:5000/cart/remove", { email, productId, color, size });
+            fetchCart();
+        } catch (error) {
+            console.error("Error removing item:", error);
+        }
     };
 
-    const clearCart = () => {
-        setCartItems([]);
+    const clearCart = async () => {
+        if (!email) return;
+
+        try {
+            await axios.post("http://localhost:5000/clear", { email });
+            setCartItems([]);
+        } catch (error) {
+            console.error("Error clearing cart:", error);
+        }
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, setCartItems }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     );

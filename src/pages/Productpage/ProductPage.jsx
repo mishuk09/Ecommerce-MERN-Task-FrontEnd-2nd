@@ -39,11 +39,13 @@ const ProductPage = ({ toggleCart }) => {
   const handleQuantityChange = (increment) => {
     setQuantity(prevQuantity => Math.max(1, prevQuantity + increment));
   };
+
+
   const handleAddToCart = () => {
     const token = localStorage.getItem('token');
     if (token) {
       addToCart({
-        id: product.id,
+        productId: product.id,
         title: product.title,
         img: product.img,
         color: selectedColor,
@@ -56,6 +58,25 @@ const ProductPage = ({ toggleCart }) => {
       navigate('/signin'); // Redirect to sign-in page if token is missing
     }
   };
+
+
+  // const handleAddToCart = () => {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     addToCart({
+  //       id: product.id,
+  //       title: product.title,
+  //       img: product.img,
+  //       color: selectedColor,
+  //       size: selectedSize,
+  //       price: product.newPrice,
+  //       quantity
+  //     });
+  //     toggleCart(); // Open cart when item is added
+  //   } else {
+  //     navigate('/signin'); // Redirect to sign-in page if token is missing
+  //   }
+  // };
 
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');

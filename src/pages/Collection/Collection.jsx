@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Heart, SlidersHorizontal, X } from "lucide-react";
+import { Link, useParams } from 'react-router-dom';
+import { SlidersHorizontal, X } from "lucide-react";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const Collection = () => {
+    const { category } = useParams();
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [filterOpen, setFilterOpen] = useState(false);
@@ -26,9 +27,12 @@ const Collection = () => {
             .then(response => {
                 if (Array.isArray(response.data.items)) {
                     // const categoryToFilter = "headphone";  
-                    const filteredItems = response.data.items.filter(item => item.category === category);
-                    setPosts(filteredItems);  
-                    setFilteredPosts(filteredItems);  
+                    const filteredItems = response.data.items.filter(item =>
+                        item.category.toLowerCase() === category.toLowerCase()
+                    );
+
+                    setPosts(filteredItems);
+                    setFilteredPosts(filteredItems);
                 } else {
                     console.error("Unexpected API response:", response.data);
                     setPosts([]);
@@ -109,7 +113,7 @@ const Collection = () => {
     return (
         <div className="max-w-7xl mx-auto collection pb-10">
             <div className="text-center pt-6 pb-4 lg:pt-10">
-                <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / All Products</p>
+                <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / {Collection ? 'Collection' : 'All products'}</p>
 
 
                 {/* <h1 className="text-xl lg:text-3xl filter-tittle-3  font-bold mt-2 text-center lg:text-start pl-4">Weekend Edit</h1> */}
