@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Flashsell = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [wishlist, setWishlist] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,6 +29,7 @@ const Flashsell = () => {
         };
 
         fetchData();
+        fetchWishlist();
     }, []);
 
 
@@ -49,21 +51,42 @@ const Flashsell = () => {
             items: 2
         }
     };
-    const [wishlist, setWishlist] = useState(
-        JSON.parse(localStorage.getItem('wishlist')) || {}
-    );
-    const handleWishlist = (productId) => {
-        const updateWishlist = { ...wishlist, [productId]: !wishlist[productId] };
-        setWishlist(updateWishlist);
-        localStorage.setItem('wishlist', JSON.stringify(updateWishlist));
+
+    // Get email from localStorage
+    const email = localStorage.getItem("email");
+
+
+    // Fetch wishlist items from DB
+    const fetchWishlist = async () => {
+        if (!email) return;
+        try {
+            const res = await axios.post("http://localhost:5000/wishlist/get", { email });
+            const wishlistMap = res.data.reduce((acc, item) => {
+                acc[item.productId] = true;
+                return acc;
+            }, {});
+            setWishlist(wishlistMap);
+        } catch (error) {
+            console.error("Error fetching wishlist:", error);
+        }
     };
 
-    useEffect(() => {
-        const savedWishlist = JSON.parse(localStorage.getItem('wishlist'));
-        if (savedWishlist) {
-            setWishlist(savedWishlist);
+
+    //handle wishlist toggle
+    const handleWishlist = async (productId) => {
+        if (!email) return;
+        try {
+            if (wishlist[productId]) {
+                await axios.post("http://localhost:5000/wishlist/remove", { email, productId });
+            } else {
+                await axios.post("http://localhost:5000/wishlist/add", { email, productId });
+            }
+            fetchWishlist(); // refresh wishlist after update
+        } catch (error) {
+            console.error(error)
         }
-    }, []);
+    }
+
 
     return (
         <div>

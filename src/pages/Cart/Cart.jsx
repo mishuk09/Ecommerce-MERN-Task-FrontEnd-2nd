@@ -57,7 +57,7 @@ const Cart = ({ isOpen, toggleCart }) => {
                             <p>Your cart is empty</p>
                         ) : (
                             cartItems.map((item, index) => (
-                                <div key={`${item.id}-${index}`} className="mb-4 pb-2 border-b flex gap-4">
+                                <div key={`${item.id}-${index}`} className="mb-2 p-2 border-b border-gray-300 bg-blue-50 rounded flex gap-4">
                                     <div>
                                         <img
                                             className="w-[120px] h-[100px] object-cover rounded"
@@ -74,7 +74,7 @@ const Cart = ({ isOpen, toggleCart }) => {
                                         <p className="mt-2 font-bold">$ {item.price * item.quantity}</p>
                                         <button
                                             onClick={() => removeFromCart(item.id, item.color, item.size)}
-                                            className="text-gray-500 absolute top-0 right-2 mt-1 text-sm"
+                                            className="text-red-500 absolute top-0 right-2 mt-1 text-sm"
                                         >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
