@@ -1,5 +1,5 @@
 import Allproduct from "./Allproducts/Allproduct";
-// import Bestselling from "./Bestseeling/Bestselling";
+import Bestselling from "./Bestseeling/Bestselling";
 import Categories from "./Categories/Categories";
 import Flashsell from "./Flashsell/Flashsell";
 import Home from "./Home";
@@ -13,9 +13,9 @@ const Child = () => {
             <Home />
             <Flashsell />
             <Categories />
-            {/* <Bestselling /> */}
+            <Bestselling />
             <Subcategory />
-            {/* <Allproduct /> */}
+            <Allproduct />
             <ProductGrid />
             <Info />
         </div>

@@ -9,9 +9,7 @@ import Alert from '../../components/Alert';
 const Dashboard = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("tab1");
-    const [editFormVisible, setEditFormVisible] = useState(null);
     const [wishlist, setWishlist] = useState([]); // To store filtered wishlist products
-    const [loading, setLoading] = useState(true); // Loading state
     const [order, setOrder] = useState([]);
     const [success, setSuccess] = useState('');
     const [profile, setProfile] = useState({
@@ -25,39 +23,46 @@ const Dashboard = () => {
         confirmPassword: '',
     });
 
-
-
     useEffect(() => {
-        // Fetch wishlist items by ID from localStorage
-        const storedItems = JSON.parse(localStorage.getItem('wishlist')) || {}; // Retrieve wishlist object from localStorage
+        const email = localStorage.getItem('email');
 
-        // Get all the keys (product IDs) from the object
-        const productIds = Object.keys(storedItems);
+        if (!email) {
+            console.error('No email found in localStorage');
+            return;
+        }
 
-        // Fetch items from the API
-        axios.get('http://localhost:5000/items/allitem/')
+
+
+        // Fetch user's wishlist items
+        axios.post('http://localhost:5000/wishlist/get', { email })
             .then(response => {
-                console.log(response.data);  // Log the response data to check its structure
+                const userWishlist = response.data;
+                if (!userWishlist || userWishlist.length === 0) {
+                    setWishlist([]);
+                    return;
+                }
 
-                // Check if response.data is an array or an object containing an array
-                const items = Array.isArray(response.data) ? response.data : response.data.items; // Adjust based on actual response structure
+                const productIds = userWishlist.map(item => item.productId);
 
-                // Filter the products based on the stored product IDs
-                const filteredPosts = items.filter(product =>
-                    productIds.includes(product._id)  // Check if product ID is in the stored productIds array
-                );
+                // Fetch all items from DB
+                return axios.get('http://localhost:5000/items/allitem/')
+                    .then(response => {
+                        console.log("All Items:", response.data);
 
-                // Update the wishlist state with the filtered posts
-                setWishlist(filteredPosts);
+                        const items = Array.isArray(response.data) ? response.data : response.data.items;
+                        const filteredPosts = items.filter(product => productIds.includes(product._id));
 
-                // Set loading to false once data is fetched
-                setLoading(false);
+                        setWishlist(filteredPosts);
+                    });
             })
             .catch(error => {
-                console.error(error);
-                setLoading(false);  // Set loading to false in case of error
-            });
+                console.error('Error fetching wishlist or items:', error);
+            })
+
+
     }, []);
+
+
 
     //Fetch order
     useEffect(() => {
@@ -74,16 +79,6 @@ const Dashboard = () => {
             });
     }, []);
 
-
-    // Function to toggle the edit form visibility
-    const toggleEditForm = (formType) => {
-        // If the formType is already visible, close it; otherwise, open the corresponding form
-        if (editFormVisible === formType) {
-            setEditFormVisible(null); // Close the form
-        } else {
-            setEditFormVisible(formType); // Open the selected form
-        }
-    };
 
 
     const handleTabClick = (tab) => {
@@ -166,17 +161,15 @@ const Dashboard = () => {
         navigate('/signin');
     };
 
-    if (loading) {
-        return <div>Loading...</div>; // You can use a loading skeleton or any other placeholder
-    }
+
     return (
-        <div className="min-h-screen flex flex-col   px-4">
+        <div className="min-h-screen    px-4">
 
             {success && <Alert name={success} />}
 
-            <main className="flex-grow container mx-auto px-4  ">
+            <main className="flex-grow max-w-7xl mx-auto px-4  ">
                 <div className="shop-head border-b border-gray-300 h-[120px] sm:h-[120px] flex items-center text-center justify-center relative">
-                    <div className="flex relative shop-h-text custom-container flex-col h-auto w-full text-center justify-center">
+                    <div className="flex relative shop-h-text   flex-col h-auto w-full text-center justify-center">
                         <p className="text-[20px] sm:text-[26px] lg:text-[30px] font-bold">My Account</p>
                         <span className="text-center text-[12px] cart-access lg:text-[14px]">
                             <span>Home /</span> Account
@@ -187,7 +180,7 @@ const Dashboard = () => {
                     <div className="overlay1"></div>
                 </div>
 
-                <div className="tabs custom-container  profile-head">
+                <div className="tabs    profile-head">
 
                     <div className="dashbord-parent md:px-1 lg:px-3 bg-white">
                         <div className="tab-links h-[200px] grid rounded">
@@ -205,17 +198,11 @@ const Dashboard = () => {
                             >
                                 <div className='flex items-center'><Package size={18} className='me-1' />  Orders</div>
                             </div>
+
                             <div
                                 className={`flex items-center text-center cursor-pointer p-2 rounded ${activeTab === "tab3" ? "bg-gray-200 text-black" : "bg-white"
                                     }`}
                                 onClick={() => handleTabClick("tab3")}
-                            >
-                                <div className='flex items-center'><Pin size={18} className='me-1' /> Your Address</div>
-                            </div>
-                            <div
-                                className={`flex items-center text-center cursor-pointer p-2 rounded ${activeTab === "tab4" ? "bg-gray-200 text-black" : "bg-white"
-                                    }`}
-                                onClick={() => handleTabClick("tab4")}
                             >
                                 <div className='flex items-center'><Heart size={18} className='me-1' /> Your Wishlist</div>
                             </div>
@@ -338,7 +325,7 @@ const Dashboard = () => {
                             <div className="tab">
                                 <p className="sm:text-[24px] text-[20px] font-medium mt-0">Order history</p>
                                 {order.map((order) => (
-                                    <div key={order._id} className="rounded bg-white mb-4">
+                                    <div key={order._id} className="rounded bg-blue-50 mb-4">
                                         <div className="flex flex-col sm:items-center sm:flex-row order-cart-d border-t border-r border-l rounded-t border-gray-300 justify-between p-4">
                                             <div className="flex gap-14">
                                                 <div>
@@ -414,147 +401,8 @@ const Dashboard = () => {
                                 ))}
                             </div>
                         )}
+
                         {activeTab === "tab3" && (
-                            <div className="tab">
-                                <p className="sm:text-[24px] text-[20px] font-medium">Your Address (1)</p>
-
-                                <div className="address-div mt-6 md:flex md:gap-3">
-                                    {/* Default Address Card */}
-                                    <div className="w-full h-[full] border rounded-md">
-                                        <div className="w-[100%] md:w-[100%] relative h-[270px] md:h-[320px] lg:h-[270px] border rounded">
-                                            <div className="w-full h-12 bg-slate-100 flex items-center px-6">
-                                                Default addresses
-                                            </div>
-                                            <div className="address-details px-6 pt-4 pb-4">
-                                                <p className="pt-1 font-semibold">Hasan Mahmud</p>
-                                                <p className="pt-1">batlil54@gmail.com</p>
-                                                <p className="pt-1">Atlas, Vomra, UNITED KINGDOM.</p>
-                                                <p className="pt-1">Address 2: 123 Main St</p>
-                                                <p className="pt-1">Phone: +766 657637643</p>
-                                            </div>
-                                            <div className="flex editbtn w-full gap-3 px-6">
-                                                <div
-                                                    className="editbtn1 w-full flex items-center text-center justify-center bg-slate-100 border rounded-full h-10 cursor-pointer"
-                                                    onClick={() => toggleEditForm("default")}
-                                                >
-                                                    EDIT
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Shipping Address Card */}
-                                    <div className="w-full mt-4 md:mt-0 h-[full] border rounded-md">
-                                        <div className="w-[100%] md:w-[100%] h-[270px] md:h-[320px] relative lg:h-[270px] border rounded">
-                                            <div className="w-full h-12 bg-slate-100 flex items-center px-6">
-                                                Shipping addresses
-                                            </div>
-                                            <div className="shipping-address-details px-6 pt-4 pb-4">
-                                                <p className="pt-1 font-semibold">Hasan Mahmud</p>
-                                                <p className="pt-1">ankur54@gmail.com</p>
-                                                <p className="pt-1">Atlas, Vomra, UNITED KINGDOM.</p>
-                                                <p className="pt-1">Address 2: 456 Elm St</p>
-                                                <p className="pt-1">Phone: +766 657637643</p>
-                                            </div>
-                                            <div className="flex editbtn-one w-full gap-3 px-6">
-                                                <div
-                                                    className="editbtn-two w-full flex items-center text-center justify-center bg-slate-100 border rounded-full h-10 cursor-pointer"
-                                                    onClick={() => toggleEditForm("shipping")}
-                                                >
-                                                    EDIT
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Edit Form for Default Address */}
-                                {editFormVisible === "default" && (
-                                    <div className="edit-form w-full mt-6">
-                                        <p>Default Address</p>
-                                        <form id="editAddressForm">
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none  border rounded mt-2"
-                                                type="text"
-                                                name="name"
-                                                placeholder="Name"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="email"
-                                                name="email"
-                                                placeholder="Email"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="text"
-                                                name="address"
-                                                placeholder="Address"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="text"
-                                                name="address2"
-                                                placeholder="Address 2"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="text"
-                                                name="phone"
-                                                placeholder="Phone"
-                                            />
-                                            <button className="rounded-full mt-4" type="submit">
-                                                Update
-                                            </button>
-                                        </form>
-                                    </div>
-                                )}
-
-                                {/* Edit Form for Shipping Address */}
-                                {editFormVisible === "shipping" && (
-                                    <div className="edit-shipping-form w-full mt-6">
-                                        <p>Shiping Address</p>
-                                        <form id="editShippingAddressForm">
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none  border rounded mt-2"
-                                                type="text"
-                                                name="name"
-                                                placeholder="Name"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="email"
-                                                name="email"
-                                                placeholder="Email"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="text"
-                                                name="address"
-                                                placeholder="Address"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="text"
-                                                name="address2"
-                                                placeholder="Address 2"
-                                            />
-                                            <input
-                                                className="w-full h-10 px-2 text-[14px] outline-none border rounded mt-2"
-                                                type="text"
-                                                name="phone"
-                                                placeholder="Phone"
-                                            />
-                                            <button className="rounded-full mt-4" type="submit">
-                                                Update
-                                            </button>
-                                        </form>
-                                    </div>
-                                )}
-                            </div>
-
-                        )}
-                        {activeTab === "tab4" && (
                             <div className="tab">
                                 <h2 className='mb-4 font-medium'>Your Wishlist</h2>
                                 {wishlist.length === 0 ? (

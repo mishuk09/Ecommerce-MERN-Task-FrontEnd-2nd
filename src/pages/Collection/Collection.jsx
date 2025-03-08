@@ -6,13 +6,14 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import useWishlist from '../../components/Wishlist';
 
 const Collection = () => {
     const { category } = useParams();
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [filterOpen, setFilterOpen] = useState(false);
-    const [wishlist, setWishlist] = useState(JSON.parse(localStorage.getItem('wishlist')) || {});
+    const { wishlist, toggleWishlist } = useWishlist();
     const [filters, setFilters] = useState({
         color: [],
         priceRange: [0, 1000],
@@ -54,11 +55,11 @@ const Collection = () => {
         setFilterOpen(!filterOpen);
     };
 
-    const handleWishlist = (productId) => {
-        const updatedWishlist = { ...wishlist, [productId]: !wishlist[productId] };
-        setWishlist(updatedWishlist);
-        localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-    };
+    // const handleWishlist = (productId) => {
+    //     const updatedWishlist = { ...wishlist, [productId]: !wishlist[productId] };
+    //     setWishlist(updatedWishlist);
+    //     localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    // };
 
     const handleCheckboxChange = (filterType, value) => {
         const updatedFilters = { ...filters };
@@ -261,7 +262,7 @@ const Collection = () => {
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        handleWishlist(product._id);
+                                        toggleWishlist(product._id);
                                     }}
                                     className="absolute top-2 right-2 p-2"
                                 >

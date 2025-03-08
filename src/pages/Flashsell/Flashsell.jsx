@@ -7,13 +7,15 @@ import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useWishlist from "../../components/Wishlist";
 
 
 
 const Flashsell = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [wishlist, setWishlist] = useState({});
+    // const [wishlist, setWishlist] = useState({});
+    const { wishlist, toggleWishlist } = useWishlist();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +31,7 @@ const Flashsell = () => {
         };
 
         fetchData();
-        fetchWishlist();
+        // fetchWishlist();
     }, []);
 
 
@@ -53,39 +55,39 @@ const Flashsell = () => {
     };
 
     // Get email from localStorage
-    const email = localStorage.getItem("email");
+    // const email = localStorage.getItem("email");
 
 
-    // Fetch wishlist items from DB
-    const fetchWishlist = async () => {
-        if (!email) return;
-        try {
-            const res = await axios.post("http://localhost:5000/wishlist/get", { email });
-            const wishlistMap = res.data.reduce((acc, item) => {
-                acc[item.productId] = true;
-                return acc;
-            }, {});
-            setWishlist(wishlistMap);
-        } catch (error) {
-            console.error("Error fetching wishlist:", error);
-        }
-    };
+    // // Fetch wishlist items from DB
+    // const fetchWishlist = async () => {
+    //     if (!email) return;
+    //     try {
+    //         const res = await axios.post("http://localhost:5000/wishlist/get", { email });
+    //         const wishlistMap = res.data.reduce((acc, item) => {
+    //             acc[item.productId] = true;
+    //             return acc;
+    //         }, {});
+    //         setWishlist(wishlistMap);
+    //     } catch (error) {
+    //         console.error("Error fetching wishlist:", error);
+    //     }
+    // };
 
 
-    //handle wishlist toggle
-    const handleWishlist = async (productId) => {
-        if (!email) return;
-        try {
-            if (wishlist[productId]) {
-                await axios.post("http://localhost:5000/wishlist/remove", { email, productId });
-            } else {
-                await axios.post("http://localhost:5000/wishlist/add", { email, productId });
-            }
-            fetchWishlist(); // refresh wishlist after update
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    // //handle wishlist toggle
+    // const handleWishlist = async (productId) => {
+    //     if (!email) return;
+    //     try {
+    //         if (wishlist[productId]) {
+    //             await axios.post("http://localhost:5000/wishlist/remove", { email, productId });
+    //         } else {
+    //             await axios.post("http://localhost:5000/wishlist/add", { email, productId });
+    //         }
+    //         fetchWishlist(); // refresh wishlist after update
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
 
 
     return (
@@ -144,7 +146,7 @@ const Flashsell = () => {
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    handleWishlist(product._id);
+                                    toggleWishlist(product._id);
                                 }}
                                 className="absolute ring-0 bg-white rounded-full top-2 right-2 w-8 h-8 flex items-center justify-center"
                             >

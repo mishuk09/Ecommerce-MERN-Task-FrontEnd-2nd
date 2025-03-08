@@ -6,12 +6,14 @@ import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useWishlist from "../../components/Wishlist";
 
 
 
 const Bestseeling = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { wishlist, toggleWishlist } = useWishlist();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,21 +50,7 @@ const Bestseeling = () => {
             items: 2
         }
     };
-    const [wishlist, setWishlist] = useState(
-        JSON.parse(localStorage.getItem('wishlist')) || {}
-    );
-    const handleWishlist = (productId) => {
-        const updateWishlist = { ...wishlist, [productId]: !wishlist[productId] };
-        setWishlist(updateWishlist);
-        localStorage.setItem('wishlist', JSON.stringify(updateWishlist));
-    };
 
-    useEffect(() => {
-        const savedWishlist = JSON.parse(localStorage.getItem('wishlist'));
-        if (savedWishlist) {
-            setWishlist(savedWishlist);
-        }
-    }, []);
 
     return (
         <div className="mt-20">
@@ -119,7 +107,7 @@ const Bestseeling = () => {
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    handleWishlist(product._id);
+                                    toggleWishlist(product._id);
                                 }}
                                 className="absolute ring-0 bg-white rounded-full top-2 right-2 w-8 h-8 flex items-center justify-center"
                             >
