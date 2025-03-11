@@ -59,24 +59,7 @@ const ProductPage = ({ toggleCart }) => {
     }
   };
 
-
-  // const handleAddToCart = () => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     addToCart({
-  //       id: product.id,
-  //       title: product.title,
-  //       img: product.img,
-  //       color: selectedColor,
-  //       size: selectedSize,
-  //       price: product.newPrice,
-  //       quantity
-  //     });
-  //     toggleCart(); // Open cart when item is added
-  //   } else {
-  //     navigate('/signin'); // Redirect to sign-in page if token is missing
-  //   }
-  // };
+ 
 
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
