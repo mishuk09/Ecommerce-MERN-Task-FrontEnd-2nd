@@ -16,16 +16,55 @@ const ProductPage = ({ toggleCart }) => {
   const navigate = useNavigate();
 
 
+  // useEffect(() => {
+  //   const fetchProduct = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:5000/items/${id}`);
+  //       const productData = response.data;
+  //       setProduct(productData.singleItem);
+  //       setSelectedColor(productData.color?.[0] || ''); // Default to empty string if undefined
+  //       setSelectedSize(productData.size?.[0] || '');   // Default to empty string if undefined
+  //     } catch (error) {
+  //       console.error('Error fetching product data:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchProduct();
+  // }, [id]);
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/items/${id}`);
-        const productData = response.data;
-        setProduct(productData.singleItem);
-        setSelectedColor(productData.color?.[0] || ''); // Default to empty string if undefined
-        setSelectedSize(productData.size?.[0] || '');   // Default to empty string if undefined
+        let response = await axios.get(`http://localhost:5000/items/${id}`);
+        setProduct(response.data.singleItem);
+        setSelectedColor(response.data.color?.[0] || '');
+        setSelectedSize(response.data.size?.[0] || '');
       } catch (error) {
-        console.error('Error fetching product data:', error);
+        if (error.response && error.response.status === 404) {
+          try {
+            let newResponse = await axios.get(`http://localhost:5000/cate/${id}`);
+            setProduct(newResponse.data.singleItem);
+            setSelectedColor(newResponse.data.color?.[0] || '');
+            setSelectedSize(newResponse.data.size?.[0] || '');
+          } catch (newError) {
+            if (newError.response && newError.response.status === 404) {
+              try {
+                let newArrivalResponse = await axios.get(`http://localhost:5000/new/${id}`);
+                setProduct(newArrivalResponse.data.singleItem);
+                setSelectedColor(newArrivalResponse.data.color?.[0] || '');
+                setSelectedSize(newArrivalResponse.data.size?.[0] || '');
+              } catch (newArrivalError) {
+                console.error('Error fetching product from /newarrival/:', newArrivalError);
+              }
+            } else {
+              console.error('Error fetching product from /cate/:', newError);
+            }
+          }
+        } else {
+          console.error('Error fetching product data:', error);
+        }
       } finally {
         setLoading(false);
       }
@@ -59,7 +98,7 @@ const ProductPage = ({ toggleCart }) => {
     }
   };
 
- 
+
 
   const stripHtmlTags = (html) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -115,7 +154,7 @@ const ProductPage = ({ toggleCart }) => {
               <div className="mb-4 mt-6">
                 <label className="block mb-2 text-sm font-semibold text-gray-700">Color</label>
                 <div className="flex flex-wrap gap-2">
-                  {(product.color || []).map(color => (
+                  {product.color.map(color => (
                     <button
                       key={color}
                       aria-label={`Select ${color}`}

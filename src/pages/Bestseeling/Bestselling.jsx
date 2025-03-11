@@ -58,7 +58,7 @@ const Bestseeling = () => {
                 headline="Best seeling Product"
                 child="This month"
                 href="bestseel"
-                seemore="bestseel"
+                seemore="/collection/allproduct"
             />
 
 
@@ -91,7 +91,7 @@ const Bestseeling = () => {
                             </div>
                         </div>
                     ))
-                    : posts.map(product => (
+                    : posts.slice(4, 10).map(product => (
                         <div key={product._id} className="relative bg-white rounded shadow-md">
                             <a href={`/product/${product._id}`}>
                                 <div className="overflow-hidden bg-gray-100 rounded-sm">

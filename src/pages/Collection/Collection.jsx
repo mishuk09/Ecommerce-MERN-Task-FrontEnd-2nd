@@ -27,10 +27,17 @@ const Collection = () => {
         axios.get('http://localhost:5000/items/allitem')
             .then(response => {
                 if (Array.isArray(response.data.items)) {
-                    // const categoryToFilter = "headphone";  
-                    const filteredItems = response.data.items.filter(item =>
-                        item.category.toLowerCase() === category.toLowerCase()
-                    );
+                    let filteredItems;
+
+                    if (category.toLowerCase() === "allproduct") {
+                        // Show all items if category is "allproduct"
+                        filteredItems = response.data.items;
+                    } else {
+                        // Filter by specific category
+                        filteredItems = response.data.items.filter(item =>
+                            item.category.toLowerCase() === category.toLowerCase()
+                        );
+                    }
 
                     setPosts(filteredItems);
                     setFilteredPosts(filteredItems);
@@ -252,7 +259,7 @@ const Collection = () => {
                                         <img
                                             src={product.img}
                                             alt={product.title}
-                                            className="w-full  h-[150px] object-cover transform hover:scale-110 transition-transform duration-300"
+                                            className="w-full    h-[200px] object-cover transform hover:scale-110 transition-transform duration-300"
                                         />
                                         <span className="absolute top-2 left-2 bg-gray-200 text-red-400 text-xs px-2 py-1 rounded">
                                             Sale

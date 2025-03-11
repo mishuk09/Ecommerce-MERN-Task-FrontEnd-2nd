@@ -65,7 +65,7 @@ const Categories = () => {
                 headline="Browse By Category"
                 child="Categories"
                 href="categories"
-                seemore="categories"
+                seemore="/collection/allproduct"
             />
             <Carousel
                 responsive={responsive}

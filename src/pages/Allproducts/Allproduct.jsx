@@ -33,7 +33,7 @@ const Allproduct = () => {
                 headline="Explore Our Products"
                 child="Our Product's"
                 href="collection"
-                seemore="collection"
+                seemore="/collection/allproduct"
             />
 
             <div className="max-w-7xl mt-6 mx-auto grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -59,7 +59,7 @@ const Allproduct = () => {
                             </div>
                         </div>
                     ))
-                    : posts.map(product => (
+                    : posts.slice(5, 20).map(product => (
                         <div key={product._id} className="relative bg-white rounded  ">
                             <a href={`/product/${product._id}`}>
                                 <div className="overflow-hidden bg-gray-100 rounded-sm">

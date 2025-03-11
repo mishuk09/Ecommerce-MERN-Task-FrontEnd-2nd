@@ -3,9 +3,11 @@ import mencloth from '../../assets/grid-view/mencloth.png';
 import mobile from '../../assets/grid-view/mobile.png';
 import Headline from '../../components/Headline';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 export default function ProductGrid() {
     const [items, setItems] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
 
         const fetchData = async () => {
@@ -21,7 +23,7 @@ export default function ProductGrid() {
                 headline="New Arrival"
                 child="Feature"
                 href="newarrival"
-                seemore="newarrival"
+                seemore="/collection/allproduct"
             />
 
             <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-2">
@@ -32,7 +34,7 @@ export default function ProductGrid() {
                     {
                         items && items.length > 0 ? (
                             items.slice(0, 1).map((item) => (
-                                <div key={item._id} className="relative group col-span-1 bg-black row-span-2 rounded overflow-hidden  shadow-lg hover:shadow-2xl transition-shadow duration-300h-full">
+                                <div key={item._id} onClick={() => navigate(`/product/${item._id}`)} className="relative group col-span-1 bg-black row-span-2 rounded overflow-hidden  shadow-lg hover:shadow-2xl transition-shadow duration-300h-full">
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     <img src={mobile} alt="Mobile friendly" className="w-full h-full object-cover object-top scale-100   transition-transform duration-300" />
                                     <div className="absolute bottom-0 p-6 text-white     w-full">
@@ -51,8 +53,8 @@ export default function ProductGrid() {
 
                     {
                         items && items.length > 0 ? (
-                            items.slice(0, 1).map((item) => (
-                                <div key={item._id} className="relative group col-span-1 rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300  ">
+                            items.slice(1, 2).map((item) => (
+                                <div key={item._id} onClick={() => navigate(`/product/${item._id}`)} className="relative group col-span-1 rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300  ">
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     <img src={mencloth} alt="Performance" className="w-full h-full object-cover" />
                                     <div className="absolute bottom-0 p-6 text-white     w-full">
@@ -72,8 +74,8 @@ export default function ProductGrid() {
                     <div className="grid grid-cols-2 gap-6 col-span-1">
                         {
                             items && items.length > 0 ? (
-                                items.slice(2, 4).map((item, index) => (
-                                    <div key={index} className="relative group rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                                items.slice(2, 4).map((item) => (
+                                    <div key={item._id} onClick={() => navigate(`/product/${item._id}`)} className="relative group rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                         <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
                                         <div className="absolute bottom-0 p-6 text-white">
