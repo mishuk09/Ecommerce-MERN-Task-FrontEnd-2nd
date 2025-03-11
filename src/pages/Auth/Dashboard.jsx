@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, LogOut, Package, User, Pin } from 'lucide-react';
+import { Heart, LogOut, Package, User } from 'lucide-react';
 import axios from 'axios';
 import Alert from '../../components/Alert';
 
@@ -15,7 +15,7 @@ const Dashboard = () => {
     const [profile, setProfile] = useState({
         firstName: '',
         lastName: '',
-        gender: '',
+        gender: '',                                                                                                                                                                            
         email: '',
         mobile: '',
         address: '',
