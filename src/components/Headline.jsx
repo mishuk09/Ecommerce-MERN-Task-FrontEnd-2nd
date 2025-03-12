@@ -10,7 +10,7 @@ const Headline = ({ child, headline, seemore, extra }) => {
                     <div className="text-sm font-medium child-color">{child}</div>
                    
                 </div>
-                <h2 className="text-4xl mt-4 text-center md:text-start md:text-5xl font-bold text-gray-800">
+                <h2 className="text-2xl mt-4    text-start  md:text-4xl font-bold text-gray-800">
                     {headline}
                 </h2>
             </div>

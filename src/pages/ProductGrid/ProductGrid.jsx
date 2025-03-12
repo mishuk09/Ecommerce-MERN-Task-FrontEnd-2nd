@@ -37,9 +37,9 @@ export default function ProductGrid() {
                                 <div key={item._id} onClick={() => navigate(`/product/${item._id}`)} className="relative group col-span-1 bg-black row-span-2 rounded overflow-hidden  shadow-lg hover:shadow-2xl transition-shadow duration-300h-full">
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     <img src={mobile} alt="Mobile friendly" className="w-full h-full object-cover object-top scale-100   transition-transform duration-300" />
-                                    <div className="absolute bottom-0 p-6 text-white     w-full">
-                                        <h3 className="text-xl font-bold mb-1">iPhone 12 Pro Max</h3>
-                                        <p className="text-sm mb-4 leading-relaxed text-gray-300">Brand New US varient available with 12gb</p>
+                                    <div className="absolute bottom-0  p-2 md:p-6 text-white     w-full">
+                                        <h3 className="md:text-xl font-bold mb-1">iPhone 12 Pro Max</h3>
+                                        <p className="text-sm hidden md:block mb-4 leading-relaxed text-gray-300">Brand New US varient available with 12gb</p>
                                         <a href="" className='mt- border-b-2 border-red-600'>Shop Now</a>
                                     </div>
                                 </div>
@@ -57,9 +57,9 @@ export default function ProductGrid() {
                                 <div key={item._id} onClick={() => navigate(`/product/${item._id}`)} className="relative group col-span-1 rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300  ">
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     <img src={mencloth} alt="Performance" className="w-full h-full object-cover" />
-                                    <div className="absolute bottom-0 p-6 text-white     w-full">
-                                        <h3 className="text-xl font-bold mb-1">iPhone 12 Pro Max</h3>
-                                        <p className="text-sm mb-4 leading-relaxed text-gray-300">Brand New US varient available with 12gb</p>
+                                    <div className="absolute bottom-0  p-2 md:p-6 text-white     w-full">
+                                        <h3 className="md:text-xl font-bold mb-1">iPhone 12 Pro Max</h3>
+                                        <p className="text-sm hidden md:block mb-4 leading-relaxed text-gray-300">Brand New US varient available with 12gb</p>
                                         <a href="" className='mt- border-b-2 border-red-600'>Shop Now</a>
                                     </div>
                                 </div>
@@ -78,9 +78,9 @@ export default function ProductGrid() {
                                     <div key={item._id} onClick={() => navigate(`/product/${item._id}`)} className="relative group rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                         <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
-                                        <div className="absolute bottom-0 p-6 text-white">
-                                            <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
-                                            <p className="text-sm leading-relaxed">{item.description}</p>
+                                        <div className="absolute bottom-0 p-2 md:p-6 text-white">
+                                            <h3 className="md:text-xl font-semibold mb-1">{item.title}</h3>
+                                            <p className="text-sm hidden md:block leading-relaxed">{item.description}</p>
                                             <a href="" className='mt- border-b-2 border-red-600'>Shop Now</a>
 
                                         </div>
