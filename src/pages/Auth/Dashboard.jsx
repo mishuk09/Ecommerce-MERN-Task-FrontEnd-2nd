@@ -15,7 +15,7 @@ const Dashboard = () => {
     const [profile, setProfile] = useState({
         firstName: '',
         lastName: '',
-        gender: '',                                                                                                                                                                            
+        gender: '',
         email: '',
         mobile: '',
         address: '',
@@ -173,8 +173,6 @@ const Dashboard = () => {
                         <p className="text-[20px] sm:text-[26px] lg:text-[30px] font-bold">My Account</p>
                         <span className="text-center text-[12px] cart-access lg:text-[14px]">
                             <span>Home /</span> Account
-                            {/* {wishlist.length} */}
-
                         </span>
                     </div>
                     <div className="overlay1"></div>
@@ -263,10 +261,10 @@ const Dashboard = () => {
                                         /> Female
                                     </label>
                                 </div>
-                                <div className="w-1/2  gap-6 personal-inout text-[14px] mt-3">
+                                <div className="w-full md:w-1/2  gap-6 personal-inout text-[14px] mt-3">
                                     <p className="text-[18px] font-medium mt-8">Email Address</p>
                                     <input
-                                        className="border outline-none px-2 mt-3"
+                                        className="border  outline-none px-2 mt-3"
                                         placeholder="Email"
                                         type="email"
                                         id="email"
@@ -274,7 +272,7 @@ const Dashboard = () => {
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="w-1/2  gap-6 personal-inout text-[14px] mt-3">
+                                <div className="w-full md:w-1/2  gap-6 personal-inout text-[14px] mt-3">
 
                                     <p className="text-[18px] font-medium mt-8">Mobile Number</p>
                                     <input
@@ -286,7 +284,7 @@ const Dashboard = () => {
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="w-1/2  gap-6 personal-inout text-[14px] mt-3">
+                                <div className="w-full md:w-1/2  gap-6 personal-inout text-[14px] mt-3">
 
                                     <p className="text-[18px] font-medium mt-8">Your Address</p>
                                     <input
@@ -368,13 +366,13 @@ const Dashboard = () => {
                                                 <div className="w-[100px] md:w-[120px] h-[100px] md:h-full overflow-hidden flex md:items-center">
                                                     <img className="w-[100px] h-[100px] hover:scale-105 duration-300" src={item.img} alt={item.title} />
                                                 </div>
-                                                <div className="cart-body-child5 flex flex-col justify-between">
+                                                <div className="cart-body-child5  flex flex-col justify-between">
                                                     <div className="w-full">
-                                                        <a href="/products/products.html" className="text-[16px] font-medium cart-p-title">
+                                                        <a href={`/products/${item._id}`} className="text-green-600 font-medium cart-p-title">
                                                             {item.title}
                                                         </a>
                                                         <div className="lg:flex hidden items-center price-color lg:mt-0">
-                                                            <p className="text-[14px] font-semibold me-2 cursor-auto">Color: {item.color}</p>
+                                                            <p className="text-[14px] font-medium me-2 cursor-auto">Color: {item.color}</p>
                                                             <p className="text-[14px] font-semibold me-2 cursor-auto">Size: {item.size}</p>
                                                         </div>
                                                     </div>
@@ -454,8 +452,8 @@ const Dashboard = () => {
                         )}
                     </div>
                 </div>
-            </main>
-        </div>
+            </main >
+        </div >
     );
 };
 

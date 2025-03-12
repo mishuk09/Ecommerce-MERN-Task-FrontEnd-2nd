@@ -24,11 +24,11 @@ const Footer = () => {
     };
 
     useEffect(() => {
-        const storedEmail = localStorage.getItem('email'); // Correctly retrieve email
+        const storedEmail = localStorage.getItem('email');
         if (storedEmail) {
-            setEmail(storedEmail); // Update the state
+            setEmail(storedEmail);
         }
-    }, []); // Runs only once on component mount
+    }, []);
     return (
 
 
@@ -45,10 +45,10 @@ const Footer = () => {
                 <div className='  h-auto   w-full  '>
                     <div className=' footer-grid  pb-4 gap-3 w-[100%]'>
                         <div className='w-full h-full flex flex-col overflow-hidden'>
-                            <p className="text-black flex justify-center items-center pt-12 pb-3 text-[15px] font-bold">
-                                <h1 className="text-2xl font-bold icon-img">MegaMart</h1>
+                            <div className="text-black flex justify-center items-center pt-12 pb-3 text-[15px] font-bold">
+                                <h1 className="text-2xl font-bold icon-img">...</h1>
+                            </div>
 
-                            </p>
 
                             <p className="text-justify pe-6 text-[14px] text-gray-300">Shop quality products, enjoy fast shipping, secure payment, and excellent service. </p>
                             <p className="text-xl sm:text-2xl font-semibold mt-3 mb-2 number">+977 65764763</p>
@@ -96,9 +96,17 @@ const Footer = () => {
 
                                     <div className=" lg:flex gap-1">
 
-                                        <input value={email} type="text"
+                                        {/* <input value={email} type="text"
                                             className="border w-full rounded-full h-10 outline-none px-4 text-gray-6    00"
-                                            placeholder="Email Address" />
+                                            placeholder="Email Address" /> */}
+                                        <input
+                                            value={email}
+                                            type="text"
+                                         
+                                            className="border w-full rounded-full h-10 outline-none px-4 text-gray-300"
+                                            placeholder="Email Address"
+                                        />
+
                                         <button
                                             onClick={subscribeBtnClick}
                                             className="w-full subscribe-btn   h-10 px-4 mt-4 lg:mt-0 text-white font-bold rounded-full">

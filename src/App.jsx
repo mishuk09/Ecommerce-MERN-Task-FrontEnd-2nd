@@ -30,7 +30,7 @@ function App() {
       <CartProvider>
         <Navbar toggleCart={toggleCart} isCartOpen={isCartOpen} />
         <Routes>
-          <Route path="/" element={<Child />} />
+        <Route path="/" element={<Child />} />
 
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

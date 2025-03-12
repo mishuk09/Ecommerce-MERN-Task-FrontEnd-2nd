@@ -62,23 +62,34 @@ const Collection = () => {
         setFilterOpen(!filterOpen);
     };
 
-    // const handleWishlist = (productId) => {
-    //     const updatedWishlist = { ...wishlist, [productId]: !wishlist[productId] };
-    //     setWishlist(updatedWishlist);
-    //     localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-    // };
 
+
+    // const handleCheckboxChange = (filterType, value) => {
+    //     const updatedFilters = { ...filters };
+    //     const lowerValue = value.toLowerCase(); // Convert to lowercase
+    //     if (updatedFilters[filterType].includes(lowerValue)) {
+    //         updatedFilters[filterType] = updatedFilters[filterType].filter(item => item !== lowerValue);
+    //     } else {
+    //         updatedFilters[filterType].push(lowerValue);
+    //     }
+    //     setFilters(updatedFilters);
+    //     applyFilters(updatedFilters);
+    // };
     const handleCheckboxChange = (filterType, value) => {
         const updatedFilters = { ...filters };
         const lowerValue = value.toLowerCase(); // Convert to lowercase
+
         if (updatedFilters[filterType].includes(lowerValue)) {
+            // Remove the value from the array if it's already included
             updatedFilters[filterType] = updatedFilters[filterType].filter(item => item !== lowerValue);
         } else {
+            // Add the value to the array if it's not included
             updatedFilters[filterType].push(lowerValue);
         }
         setFilters(updatedFilters);
         applyFilters(updatedFilters);
     };
+
 
     const handlePriceChange = (value) => {
         const updatedFilters = { ...filters, priceRange: [0, value] };
@@ -119,7 +130,7 @@ const Collection = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto collection pb-10">
+        <div className="max-w-7xl mx-auto min-h-screen collection pb-10">
             <div className="text-center pt-6 pb-4 lg:pt-10">
                 <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / {Collection ? 'Collection' : 'All products'}</p>
 
@@ -132,11 +143,12 @@ const Collection = () => {
                     >
                         {filterOpen ? (
                             <div>
-                                <SlidersHorizontal size={20} className='me-2' />
+                                <X size={20} className='me-2' />
                             </div>
                         ) : (
                             <div>
-                                <X size={20} className='me-2' />
+
+                                <SlidersHorizontal size={20} className='me-2' />
                             </div>
                         )}
                         Filter
@@ -195,11 +207,11 @@ const Collection = () => {
                             <span className="block text-sm text-gray-600 mt-2">{`Up to $${filters.priceRange[1]}`}</span>
                         </div>
 
-                        {/* Type Filter */}
+                        {/* category Filter */}
                         <div className="mb-6">
-                            <label className="block text-lg font-medium text-gray-700 mb-2">Type</label>
+                            <label className="block text-lg font-medium text-gray-700 mb-2">Category</label>
                             <div className="space-y-2">
-                                {['new arrival', 'men', 'women', 'hoodie', 'sweat shirt', 'trouser', 'caps'].map(type => (
+                                {['Phone', 'Computer', 'SmartWatch', 'Camera', 'Headphone', 'Gaming', 'Home', 'cloth'].map(type => (
                                     <label
                                         key={type}
                                         className="flex items-center text-gray-600 hover:text-gray-900 cursor-pointer"
@@ -207,12 +219,13 @@ const Collection = () => {
                                         <input
                                             type="checkbox"
                                             className="form-checkbox text-blue-500 rounded mr-3"
-                                            checked={filters.type.includes(type)}
+                                            checked={filters.type.includes(type.toLowerCase())}  // Ensure this is the right condition
                                             onChange={() => handleCheckboxChange('type', type)}
                                         />
                                         {type.charAt(0).toUpperCase() + type.slice(1)}
                                     </label>
                                 ))}
+
                             </div>
                         </div>
 

@@ -129,9 +129,9 @@ body {
 
 @media only screen and (max-width:768px) {
     .profile-head {
-        /* padding-top: 3.5rem; */
-        padding-left: 30px;
-        padding-right: 30px;
+
+        padding-left: 5px;
+        padding-right: 5px;
         display: grid;
         grid-template-columns: 1fr;
         grid-gap: 50px;
@@ -204,16 +204,11 @@ body {
 @media only screen and (max-width:768px) {
     .tab-content-2 {
         margin-top: 3.5rem;
-        padding-left: 25px;
+        padding-left: 0px;
         padding-right: 0px;
     }
 }
 
-@media only screen and (max-width:768px) {
-    .tab-content-2 {
-        padding-left: 0px;
-    }
-}
 
 .order-price-c {
     font-weight: 500;
@@ -523,4 +518,213 @@ body {
         grid-gap: 30px;
         font-size: 15px;
     }
+}
+
+
+
+
+
+
+
+
+/*#################################################
+####                                            ####
+####          Cart  section START           ####
+####                                            ####
+##################################################  */
+.cart-access {
+    font-weight: 400;
+}
+
+.cart-headline-two {
+    font-size: 14px;
+    font-weight: 500;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: 0.8fr 0.2fr 0.2fr 0.01fr;
+}
+
+/* .cart-headline-3 {
+    font-size: 14px;
+    font-weight: 500;
+  
+    display: grid;
+    align-items: center;
+    grid-template-columns: 0.8fr 0.2fr 0.2fr 0.1fr;
+  } */
+
+
+.cart-details {
+    margin-top: 3.5rem;
+    display: grid;
+    grid-gap: 25px;
+    grid-template-columns: 1fr 0.4fr;
+}
+
+@media only screen and (max-width:640px) {
+    .cart-details {
+        margin-top: 2rem;
+        display: grid;
+        /* grid-gap: 25px; */
+        grid-template-columns: 1fr;
+    }
+}
+
+@media only screen and (max-width:1024px) {
+
+
+    .cart-details {
+        display: grid;
+        grid-gap: 25px;
+        grid-template-columns: 1fr;
+    }
+}
+
+.cart-body {
+    align-items: center;
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: 1fr 0.4fr 0.3fr 0.1fr;
+
+}
+
+.cart-body-child {
+    font-weight: 400;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 0.1fr 1fr;
+
+}
+
+.cart-body-child-check {
+    font-weight: 400;
+    display: grid;
+    /* grid-gap: 5px; */
+    grid-template-columns: 0.1fr 1fr;
+
+}
+
+.cart-body-child2 {
+    font-weight: 400;
+    display: grid;
+    grid-template-columns: 0.6fr 0.2fr 0.2fr 0.2fr;
+
+}
+
+.cart-body-child2-c {
+    font-weight: 400;
+    display: grid;
+    grid-template-columns: 0.6fr 0.2fr 0.2fr 0.2fr;
+
+}
+
+.cart-body-child5 {
+    /* align-items: center; */
+    font-weight: 400;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 0.4fr 0.1fr 0.1fr 0.1fr 0.3fr;
+
+}
+
+@media only screen and (max-width:768px) {
+    .cart-body-child2 {
+        font-weight: 400;
+        display: grid;
+        grid-template-columns: 0.7fr 0.2fr 0.2fr;
+
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .cart-body-child2-c {
+        font-weight: 400;
+        display: grid;
+        grid-template-columns: 0.7fr 0.2fr 0.2fr 0.2fr;
+
+    }
+}
+
+@media only screen and (max-width:640px) {
+
+
+    .cart-body-child2 {
+        font-weight: 400;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media only screen and (max-width:640px) {
+
+
+    .cart-body-child2-c {
+        font-weight: 400;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+
+@media only screen and (max-width:1024px) {
+
+
+    .cart-body-child5 {
+        align-items: center;
+        font-weight: 400;
+        display: grid;
+        grid-gap: 0px;
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media only screen and (max-width:768px) {
+
+
+    .cart-body-child5 {
+        align-items: center;
+        font-weight: 400;
+        display: grid;
+        grid-gap: 0px;
+        grid-template-columns: 1fr;
+        margin-left: 10px;
+    }
+
+}
+
+@media only screen and (max-width:640px) {
+
+
+    .cart-body-child5 {
+        align-items: center;
+        font-weight: 400;
+        display: grid;
+        grid-gap: 0px;
+        grid-template-columns: 1fr;
+        margin-left: 5px;
+    }
+
+}
+
+@media only screen and (min-width:1024px) and (max-width:1200px) {
+
+
+    .cart-body-child5 {
+        /* align-items: center; */
+        font-weight: 400;
+        display: grid;
+        grid-template-columns: 0.5fr 0.1fr 0.1fr 0.2fr 0.3fr;
+
+    }
+
+
+}
+
+.terms-cart {
+    font-weight: 500;
 }

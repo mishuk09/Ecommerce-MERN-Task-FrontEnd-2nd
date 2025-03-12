@@ -56,7 +56,7 @@ export const CartProvider = ({ children }) => {
         if (!email) return;
 
         try {
-            await axios.post("http://localhost:5000/clear", { email });
+            await axios.post("http://localhost:5000/cart/clear", { email });
             setCartItems([]);
         } catch (error) {
             console.error("Error clearing cart:", error);

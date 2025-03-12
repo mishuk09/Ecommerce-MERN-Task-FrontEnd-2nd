@@ -8,6 +8,8 @@ import axios from 'axios';
 
 const Checkout = () => {
     const { cartItems, setCartItems } = useCart();
+    const { clearCart } = useCart();
+
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -80,7 +82,7 @@ const Checkout = () => {
         const orderData = {
             ...formData,
             cartItems,
-            payment: true,  
+            payment: true,
             totalAmount: calculateTotal() + 100,
             paymentMethod,
             cardDetails,
@@ -98,6 +100,7 @@ const Checkout = () => {
                 address: '',
                 landmark: '',
             });
+            clearCart();
             setCardDetails({ cardNumber: '', expiryDate: '', cvv: '' });
             setCartItems([]);
         } catch (error) {
