@@ -23,6 +23,8 @@ const Footer = () => {
         }, 3000);
     };
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
         const storedEmail = localStorage.getItem('email');
         if (storedEmail) {
@@ -46,7 +48,7 @@ const Footer = () => {
                     <div className=' footer-grid  pb-4 gap-3 w-[100%]'>
                         <div className='w-full h-full flex flex-col overflow-hidden'>
                             <div className="text-black flex justify-center items-center pt-12 pb-3 text-[15px] font-bold">
-                                <h1 className="text-2xl font-bold icon-img">...</h1>
+                                <h1 className="text-2xl font-bold icon-img">MEGAMART</h1>
                             </div>
 
 
@@ -56,9 +58,7 @@ const Footer = () => {
                             <div className="flex gap-2 mt-3">
                                 <p className="rounded-full hover:text-gray-400 text-gray-700 duration-75 border-3 flex items-center text-center justify-center w-10 h-10"><FontAwesomeIcon size='xl' icon={faFacebook} /></p>
                                 <p className="rounded-full hover:text-gray-400 text-gray-700 duration-75 border-3 flex items-center text-center justify-center w-10 h-10"><FontAwesomeIcon size='xl' icon={faInstagram} /></p>
-                                {/* <p className="rounded-full hover:text-gray-400 text-gray-700 duration-75 border-3 flex items-center text-center justify-center w-10 h-10"><FontAwesomeIcon size='xl' icon={faPinterest} /></p> */}
-                                {/* <p className="rounded-full hover:text-gray-400 text-gray-700 duration-75 border-3 flex items-center text-center justify-center w-10 h-10"><FontAwesomeIcon size='xl' icon={faEnvelope} /></p>
-                            <p className="rounded-full hover:text-gray-400 text-gray-700 duration-75 border-3 flex items-center text-center justify-center w-10 h-10"><i  size='xl' className="fa-brands fa-square-whatsapp"></i></p> */}
+                               
                             </div>
                         </div>
 
@@ -71,17 +71,17 @@ const Footer = () => {
                             <a href="/contact" className="text-[14px] text-gray-300 cursor-pointer pb-1">Contact
                                 us</a>
                             <a href="/faqs" className="text-[14px] text-gray-300 cursor-pointer pb-1">FAQ's</a>
-                            <a href="signin" className="text-[14px] text-gray-300 cursor-pointer pb-1">My Account</a>
+                            <a href={token ? "/dashboard" : "/signin"} className="text-[14px] text-gray-300 cursor-pointer pb-1">My Account</a>
                         </div>
 
                         <div className='w-full footer-service h-full leading-6 flex flex-col overflow-hidden'>
                             <p className="text-white cursor-pointer pt-4 md:pt-12 pb-3 text-[15px] font-bold">Shop By Outletshop
                             </p>
                             <a href="/contact" className="text-[14px] text-gray-300  cursor-pointer pb-1">Help</a>
-                            <a href="/signin" className="text-[14px] text-gray-300 cursor-pointer pb-1">Order Tracking</a>
-                            <a href="/signin" className="text-[14px] text-gray-300 cursor-pointer pb-1">Shipping & Delivery</a>
+                            <a href={token ? "/dashboard" : "/signin"} className="text-[14px] text-gray-300 cursor-pointer pb-1">Order Tracking</a>
+                            <a href={token ? "/dashboard" : "/signin"} className="text-[14px] text-gray-300 cursor-pointer pb-1">Shipping & Delivery</a>
                             <a href="#" className="text-[14px] text-gray-300 cursor-pointer pb-1">Advanced Search</a>
-                            <a href="/signin" className="text-[14px] text-gray-300 cursor-pointer pb-1">My Account</a>
+                            <a href={token ? "/dashboard" : "/signin"} className="text-[14px] text-gray-300 cursor-pointer pb-1">My Account</a>
                         </div>
 
                         <div className='grid   w-[100%]'>
@@ -102,7 +102,7 @@ const Footer = () => {
                                         <input
                                             value={email}
                                             type="text"
-                                         
+
                                             className="border w-full rounded-full h-10 outline-none px-4 text-gray-300"
                                             placeholder="Email Address"
                                         />
@@ -125,8 +125,8 @@ const Footer = () => {
 
                     <div
                         className="custom-container   mb-6 md:mb-0 md:flex text-center pt-3 flex-row  justify-between items-center w-full h-20">
-                        <div className="text-[14px] text-gray-300 py-2">© Sally Looze. 2024. All Rights Reserved</div>
-                        <div className="text-[14px] text-gray-300 py-2">Plexus.org.in Digital Marketing Services</div>
+                        <div className="text-[14px] text-gray-300 py-2">© MegaMart. 2024. All Rights Reserved</div>
+                        <div className="text-[14px] text-gray-300 py-2">Made by MAHADI HASAN MISHUK</div>
 
                         <div className="flex gap-2 lg:gap-3 mt-2 lg:mt-0 items-center text-center justify-center">
                             <img className=" w-10" src={applepay} alt="" />
