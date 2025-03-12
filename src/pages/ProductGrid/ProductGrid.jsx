@@ -17,6 +17,13 @@ export default function ProductGrid() {
         fetchData();
     }, [])
 
+
+    const stripHtmlTags = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    };
+
+
     return (
         <div className=" mt-20   ">
             <Headline
@@ -39,7 +46,7 @@ export default function ProductGrid() {
                                     <img src={mobile} alt="Mobile friendly" className="w-full h-full object-cover object-top scale-100   transition-transform duration-300" />
                                     <div className="absolute bottom-0  p-2 md:p-6 text-white     w-full">
                                         <h3 className="md:text-xl font-bold mb-1">iPhone 12 Pro Max</h3>
-                                        <p className="text-sm hidden md:block mb-4 leading-relaxed text-gray-300">Brand New US varient available with 12gb</p>
+                                        <p className="text-sm hidden md:block mb-4 leading-relaxed text-gray-300">{stripHtmlTags(item.description)}</p>
                                         <a href="" className='mt- border-b-2 border-red-600'>Shop Now</a>
                                     </div>
                                 </div>
@@ -59,7 +66,7 @@ export default function ProductGrid() {
                                     <img src={mencloth} alt="Performance" className="w-full h-full object-cover" />
                                     <div className="absolute bottom-0  p-2 md:p-6 text-white     w-full">
                                         <h3 className="md:text-xl font-bold mb-1">iPhone 12 Pro Max</h3>
-                                        <p className="text-sm hidden md:block mb-4 leading-relaxed text-gray-300">Brand New US varient available with 12gb</p>
+                                        <p className="text-sm hidden md:block mb-4 leading-relaxed text-gray-300">{stripHtmlTags(item.description)}</p>
                                         <a href="" className='mt- border-b-2 border-red-600'>Shop Now</a>
                                     </div>
                                 </div>
@@ -80,7 +87,7 @@ export default function ProductGrid() {
                                         <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
                                         <div className="absolute bottom-0 p-2 md:p-6 text-white">
                                             <h3 className="md:text-xl font-semibold mb-1">{item.title}</h3>
-                                            <p className="text-sm hidden md:block leading-relaxed">{item.description}</p>
+                                            <p className="text-sm hidden md:block leading-relaxed">{stripHtmlTags(item.description)}</p>
                                             <a href="" className='mt- border-b-2 border-red-600'>Shop Now</a>
 
                                         </div>
