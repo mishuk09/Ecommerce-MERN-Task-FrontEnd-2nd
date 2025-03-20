@@ -20,7 +20,9 @@ const Collection = () => {
         type: [],
         size: []
     });
-    const [loading, setLoading] = useState(true); // Added loading state
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     // Fetch posts on mount
     useEffect(() => {
@@ -117,8 +119,19 @@ const Collection = () => {
         setFilteredPosts(newFilteredPosts);
     };
 
+
+    const IndexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = IndexOfLastItem - itemsPerPage;
+    const currentItems = filteredPosts.slice(indexOfFirstItem, IndexOfLastItem);
+    const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    }
     return (
-        <div className="max-w-7xl mx-auto min-h-screen collection pb-10">
+
+
+        <div className="max-w-7xl  mx-auto min-h-screen collection pb-10">
             <div className="text-center pt-6 pb-4 lg:pt-10">
                 <p className=" text-center lg:text-start text-sm lg:text-base pl-4">Collections / {Collection ? 'Collection' : 'All products'}</p>
 
@@ -240,7 +253,7 @@ const Collection = () => {
                     </div>
 
                 )}
-                <div className={`container grid grid-cols-2  ${filterOpen ? 'grid-cols-4' : 'lg:grid-cols-5'}  h-full   gap-4 md:gap-6 mx-auto px-4`}>
+                <div className={`container grid grid-cols-2  md:rid-cols-4 lg:grid-cols-5  h-full   gap-4 md:gap-6 mx-auto px-4`}>
                     {loading ? (
                         // Display skeleton loading when data is being fetched
                         Array(15).fill(0).map((_, index) => (
@@ -252,15 +265,15 @@ const Collection = () => {
                                 </div>
                             </div>
                         ))
-                    ) : filteredPosts.length > 0 ? (
-                        filteredPosts.map(product => (
+                    ) : currentItems.length > 0 ? (
+                        currentItems.map(product => (
                             <div key={product._id} className="relative bg-white rounded-sm shadow-md">
                                 <Link to={`/product/${product._id}`}>
                                     <div className="overflow-hidden rounded-sm">
                                         <img
                                             src={product.img}
                                             alt={product.title}
-                                            className="w-full    h-[200px] object-cover transform hover:scale-110 transition-transform duration-300"
+                                            className={`w-full    ${filterOpen ? " h-[150px]" : " h-[200px]"}   object-cover transform hover:scale-110 transition-transform duration-300`}
                                         />
                                         <span className="absolute top-2 left-2 bg-gray-200 text-red-400 text-xs px-2 py-1 rounded">
                                             Sale
@@ -309,7 +322,34 @@ const Collection = () => {
                     )}
                 </div>
             </div>
+
+            <div className="pagination max-w-7xl mx-auto  flex justify-end  mt-10   space-x-2 p-4">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`px-3 py-1 border text-gray-600 border-gray-300  shadow rounded-lg ${currentPage === 1 ? 'opacity-50 cursor-not-allowed ' : 'hover:bg-blue-100'}`}
+                >
+                    Prev
+                </button>
+                {[...Array(totalPages)].map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`px-3 py-1 border text-gray-600 border-gray-300 rounded-lg transition-colors   ${currentPage === index + 1 ? 'bg-red-500 text-white' : 'hover:bg-blue-100'}`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-3 py-1 border text-gray-600 border-gray-300 shadow rounded-lg ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-100'}`}
+                >
+                    Next
+                </button>
+            </div>
         </div >
+
     );
 };
 
