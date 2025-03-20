@@ -29,7 +29,7 @@ export default function Navbar({ toggleCart, isCartOpen }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/items/search?q=${query}`);
+      const response = await fetch(`http://localhost:5001/items/search?q=${query}`);
       const data = await response.json();
 
       setSearchResults(data.items || []);

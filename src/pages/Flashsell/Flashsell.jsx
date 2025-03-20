@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios"; // Import Axios
 import Headline from "../../components/Headline";
-import CountdownTimer from "../../components/CountdownTimer";
+// import CountdownTimer from "../../components/CountdownTimer";
 import Skeleton from "react-loading-skeleton";
 import Carousel from "react-multi-carousel";
 import 'react-multi-carousel/lib/styles.css';
@@ -20,7 +20,7 @@ const Flashsell = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/items/allitem');
+                const response = await axios.get('http://localhost:5001/items/allitem');
                 setPosts(response.data.items);
                 setLoading(false);
             } catch (error) {
@@ -62,7 +62,7 @@ const Flashsell = () => {
                 headline="Flash Sales"
                 child="Today's"
                 href="flashsell"
-                extra={<CountdownTimer />}
+                // extra={<CountdownTimer />}
                 seemore="/collection/allproduct"
             />
 

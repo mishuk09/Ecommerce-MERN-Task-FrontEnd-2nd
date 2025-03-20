@@ -34,7 +34,7 @@ const Dashboard = () => {
 
 
         // Fetch user's wishlist items
-        axios.post('http://localhost:5000/wishlist/get', { email })
+        axios.post('http://localhost:5001/wishlist/get', { email })
             .then(response => {
                 const userWishlist = response.data;
                 if (!userWishlist || userWishlist.length === 0) {
@@ -45,10 +45,9 @@ const Dashboard = () => {
                 const productIds = userWishlist.map(item => item.productId);
 
                 // Fetch all items from DB
-                return axios.get('http://localhost:5000/items/allitem/')
+                return axios.get('http://localhost:5001/items/allitem/')
                     .then(response => {
-                        console.log("All Items:", response.data);
-
+                        // console.log("All Items:", response.data);
                         const items = Array.isArray(response.data) ? response.data : response.data.items;
                         const filteredPosts = items.filter(product => productIds.includes(product._id));
 
@@ -67,7 +66,7 @@ const Dashboard = () => {
     //Fetch order
     useEffect(() => {
         const storedEmail = localStorage.getItem('email'); // Retrieve email from local storage
-        axios.post('http://localhost:5000/order/allorder')
+        axios.post('http://localhost:5001/order/allorder')
             .then(response => {
                 const filteredPosts = response.data.filter(orders => orders.email === storedEmail); // Compare with stored email
                 setOrder(filteredPosts);
@@ -94,7 +93,7 @@ const Dashboard = () => {
             }
 
             try {
-                const response = await axios.get('http://localhost:5000/auth/dashboard', {
+                const response = await axios.get('http://localhost:5001/auth/dashboard', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -124,7 +123,7 @@ const Dashboard = () => {
         const token = localStorage.getItem('token');
         try {
             await axios.put(
-                'http://localhost:5000/auth/update-profile',
+                'http://localhost:5001/auth/update-profile',
                 {
                     firstName: profile.firstName,
                     lastName: profile.lastName,

@@ -11,7 +11,7 @@ export default function ProductGrid() {
     useEffect(() => {
 
         const fetchData = async () => {
-            const response = await axios.get('http://localhost:5000/new/')
+            const response = await axios.get('http://localhost:5001/new/')
             setItems(response.data)
         }
         fetchData();

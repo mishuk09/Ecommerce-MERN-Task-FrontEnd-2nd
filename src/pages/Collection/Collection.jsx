@@ -24,7 +24,7 @@ const Collection = () => {
 
     // Fetch posts on mount
     useEffect(() => {
-        axios.get('http://localhost:5000/items/allitem')
+        axios.get('http://localhost:5001/items/allitem')
             .then(response => {
                 if (Array.isArray(response.data.items)) {
                     let filteredItems;
@@ -63,18 +63,6 @@ const Collection = () => {
     };
 
 
-
-    // const handleCheckboxChange = (filterType, value) => {
-    //     const updatedFilters = { ...filters };
-    //     const lowerValue = value.toLowerCase(); // Convert to lowercase
-    //     if (updatedFilters[filterType].includes(lowerValue)) {
-    //         updatedFilters[filterType] = updatedFilters[filterType].filter(item => item !== lowerValue);
-    //     } else {
-    //         updatedFilters[filterType].push(lowerValue);
-    //     }
-    //     setFilters(updatedFilters);
-    //     applyFilters(updatedFilters);
-    // };
     const handleCheckboxChange = (filterType, value) => {
         const updatedFilters = { ...filters };
         const lowerValue = value.toLowerCase(); // Convert to lowercase
@@ -211,7 +199,7 @@ const Collection = () => {
                         <div className="mb-6">
                             <label className="block text-lg font-medium text-gray-700 mb-2">Category</label>
                             <div className="space-y-2">
-                                {['Phone', 'Computer', 'SmartWatch', 'Camera', 'Headphone', 'Gaming', 'Home', 'cloth'].map(type => (
+                                {['Phone', 'Computer', 'SmartWatch', 'Camera', 'Headphone', 'Home', 'cloth'].map(type => (
                                     <label
                                         key={type}
                                         className="flex items-center text-gray-600 hover:text-gray-900 cursor-pointer"

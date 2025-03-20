@@ -16,42 +16,25 @@ const ProductPage = ({ toggleCart }) => {
   const navigate = useNavigate();
 
 
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:5000/items/${id}`);
-  //       const productData = response.data;
-  //       setProduct(productData.singleItem);
-  //       setSelectedColor(productData.color?.[0] || ''); // Default to empty string if undefined
-  //       setSelectedSize(productData.size?.[0] || '');   // Default to empty string if undefined
-  //     } catch (error) {
-  //       console.error('Error fetching product data:', error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchProduct();
-  // }, [id]);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        let response = await axios.get(`http://localhost:5000/items/${id}`);
+        let response = await axios.get(`http://localhost:5001/items/${id}`);
         setProduct(response.data.singleItem);
         setSelectedColor(response.data.color?.[0] || '');
         setSelectedSize(response.data.size?.[0] || '');
       } catch (error) {
         if (error.response && error.response.status === 404) {
           try {
-            let newResponse = await axios.get(`http://localhost:5000/cate/${id}`);
+            let newResponse = await axios.get(`http://localhost:5001/cate/${id}`);
             setProduct(newResponse.data.singleItem);
             setSelectedColor(newResponse.data.color?.[0] || '');
             setSelectedSize(newResponse.data.size?.[0] || '');
           } catch (newError) {
             if (newError.response && newError.response.status === 404) {
               try {
-                let newArrivalResponse = await axios.get(`http://localhost:5000/new/${id}`);
+                let newArrivalResponse = await axios.get(`http://localhost:5001/new/${id}`);
                 setProduct(newArrivalResponse.data.singleItem);
                 setSelectedColor(newArrivalResponse.data.color?.[0] || '');
                 setSelectedSize(newArrivalResponse.data.size?.[0] || '');
@@ -100,10 +83,10 @@ const ProductPage = ({ toggleCart }) => {
 
 
 
-  const stripHtmlTags = (html) => {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    return doc.body.textContent || "";
-  };
+  // const stripHtmlTags = (html) => {
+  //   const doc = new DOMParser().parseFromString(html, 'text/html');
+  //   return doc.body.textContent || "";
+  // };
 
 
 
@@ -146,8 +129,10 @@ const ProductPage = ({ toggleCart }) => {
 
               {/* Description */}
               <div className="mt-6">
-                <p className="text-gray-700 mb-3">{stripHtmlTags(product.description)}</p>
-                <p className="text-gray-700">Made in Australia</p>
+                <p className={product.stock <= 5 ? 'text-red-500 font-medium' : 'text-green-500 font-medium'}>
+                  {product.stock <= 5 ? '⚠️ Limited Stock' : '✅ In Stock'}
+                </p>
+
               </div>
 
               {/* Color Selection */}
@@ -158,7 +143,7 @@ const ProductPage = ({ toggleCart }) => {
                     <button
                       key={color}
                       aria-label={`Select ${color}`}
-                      className={`relative w-10 h-10 rounded-sm border-2 hover:border-[3px] hover:border-white duration-75 ${selectedColor === color ? 'ring-1 ring-black' : ''}`}
+                      className={`relative w-10 h-10 rounded-full border-2 border-gray-400  hover:border-gray-600 duration-75 ${selectedColor === color ? 'border-1 ' : ''}`}
                       style={{ backgroundColor: color.toLowerCase() }}
                       onClick={() => setSelectedColor(color)}
                     >
@@ -178,7 +163,7 @@ const ProductPage = ({ toggleCart }) => {
                     <button
                       key={size}
                       aria-label={`Select size ${size}`}
-                      className={`w-10 h-10 flex items-center justify-center text-base border ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-white text-gray-700'}`}
+                      className={`relative w-10 h-10 rounded-full border-2 border-gray-400  hover:border-gray-600 duration-75  ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-white text-gray-700'}`}
                       onClick={() => setSelectedSize(size)}
                     >
                       {size}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "../../components/Alert";
 import RedAlert from "../../components/RedAlert";
+import { useCart } from "../Cart/CartContext";
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -9,6 +10,8 @@ const SignIn = () => {
     const [success, setSuccess] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const { fetchCart } = useCart();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,7 +19,7 @@ const SignIn = () => {
         const userData = { email, password };
 
         try {
-            const response = await fetch('http://localhost:5000/auth/signin', {
+            const response = await fetch('http://localhost:5001/auth/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,6 +37,8 @@ const SignIn = () => {
                 localStorage.setItem('name', data.name);
                 localStorage.setItem('address', data.address);
 
+                await fetchCart();
+
                 // Redirect to dashboard after 2 seconds
                 setTimeout(() => {
                     navigate('/dashboard');
@@ -44,6 +49,9 @@ const SignIn = () => {
             }
         } catch (error) {
             setError("Network error. Please try again.");
+            setTimeout(() => {
+                setError("");
+            }, 3000)
             console.error(error);
         }
     };

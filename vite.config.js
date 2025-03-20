@@ -13,7 +13,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/product/items': 'http://localhost:5000'
+      '/product/items': 'http://localhost:5001'
     }
   },
   esbuild: {

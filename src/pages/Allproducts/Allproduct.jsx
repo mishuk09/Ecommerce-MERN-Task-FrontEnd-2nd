@@ -10,11 +10,14 @@ const Allproduct = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const { wishlist, toggleWishlist } = useWishlist();
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/items/allitem');
+                const response = await axios.get('http://localhost:5001/items/allitem');
                 setPosts(response.data.items);
                 setLoading(false);
             } catch (error) {
@@ -27,6 +30,15 @@ const Allproduct = () => {
         fetchData();
     }, []);
 
+
+    const IndexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = IndexOfLastItem - itemsPerPage;
+    const currentItems = posts.slice(indexOfFirstItem, IndexOfLastItem);
+    const totalPages = Math.ceil(posts.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    }
     return (
         <div className="mt-20">
             <Headline
@@ -59,49 +71,82 @@ const Allproduct = () => {
                             </div>
                         </div>
                     ))
-                    : posts.slice(5, 20).map(product => (
-                        <div key={product._id} className="relative bg-white rounded  ">
-                            <a href={`/product/${product._id}`}>
-                                <div className="overflow-hidden bg-gray-100 rounded-sm">
-                                    <img
-                                        src={product.img}
-                                        alt={product.title}
-                                        className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
-                                    />
-                                    <span className="absolute sell-color text-white top-3 left-3    text-xs px-2 py-1 rounded"> - {(((product.oldPrice - product.newPrice) / product.newPrice * 100).toFixed(0))} % </span>
-                                </div>
-                            </a>
+                    : currentItems.length > 0 ? (
+                        currentItems.map((product) => (
 
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleWishlist(product._id);
-                                }}
-                                className="absolute ring-0 bg-white rounded-full top-2 right-2 w-8 h-8 flex items-center justify-center"
-                            >
-                                <FontAwesomeIcon
-                                    className={`w-4 ${wishlist[product._id] ? 'text-red-600' : 'text-gray-400'}`}
-                                    icon={faHeart}
-                                />
-                            </button>
-
-                            <div className='ps-2'>
-                                <h2 className="text-base product-card__title text-start pt-1 md:pt-3 font-semibold text-gray-900">
-                                    {product.title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()).substring(0, 20)}{product.title.length > 20 ? '...' : ''}
-                                </h2>
-                                <div>
-                                    <div>
-                                        <span className="new-price font-medium">${product.newPrice}</span>
-                                        <span className="  line-through text-gray-500 ml-2">${product.oldPrice}</span>
+                            <div key={product._id} className="relative bg-white rounded  ">
+                                <a href={`/product/${product._id}`}>
+                                    <div className="overflow-hidden bg-gray-100 rounded-sm">
+                                        <img
+                                            src={product.img}
+                                            alt={product.title}
+                                            className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
+                                        />
+                                        <span className="absolute sell-color text-white top-3 left-3    text-xs px-2 py-1 rounded"> - {(((product.oldPrice - product.newPrice) / product.newPrice * 100).toFixed(0))} % </span>
                                     </div>
+                                </a>
 
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    {/* <MadeBy /> */}
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleWishlist(product._id);
+                                    }}
+                                    className="absolute ring-0 bg-white rounded-full top-2 right-2 w-8 h-8 flex items-center justify-center"
+                                >
+                                    <FontAwesomeIcon
+                                        className={`w-4 ${wishlist[product._id] ? 'text-red-600' : 'text-gray-400'}`}
+                                        icon={faHeart}
+                                    />
+                                </button>
+
+                                <div className='ps-2'>
+                                    <h2 className="text-base product-card__title text-start pt-1 md:pt-3 font-semibold text-gray-900">
+                                        {product.title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()).substring(0, 20)}{product.title.length > 20 ? '...' : ''}
+                                    </h2>
+                                    <div>
+                                        <div>
+                                            <span className="new-price font-medium">${product.newPrice}</span>
+                                            <span className="  line-through text-gray-500 ml-2">${product.oldPrice}</span>
+                                        </div>
+
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        {/* <MadeBy /> */}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="10" className="text-center py-4">No items</td>
+                        </tr>
+                    )}
+            </div>
+
+            <div className="pagination max-w-7xl mx-auto  flex justify-end  mt-10   space-x-2 p-4">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`px-3 py-1 border text-gray-600 border-gray-300  shadow rounded-lg ${currentPage === 1 ? 'opacity-50 cursor-not-allowed ' : 'hover:bg-blue-100'}`}
+                >
+                    Prev
+                </button>
+                {[...Array(totalPages)].map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`px-3 py-1 border text-gray-600 border-gray-300 rounded-lg transition-colors   ${currentPage === index + 1 ? 'bg-red-500 text-white' : 'hover:bg-blue-100'}`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-3 py-1 border text-gray-600 border-gray-300 shadow rounded-lg ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-100'}`}
+                >
+                    Next
+                </button>
             </div>
 
         </div>

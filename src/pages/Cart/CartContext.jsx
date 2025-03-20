@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
         if (!email) return;
 
         try {
-            const res = await axios.post("http://localhost:5000/cart/get", { email });
+            const res = await axios.post("http://localhost:5001/cart/get", { email });
             setCartItems(res.data);
         } catch (error) {
             console.error("Error fetching cart:", error);
@@ -33,7 +33,7 @@ export const CartProvider = ({ children }) => {
         if (!email) return;
 
         try {
-            await axios.post("http://localhost:5000/cart/add", { ...item, email });
+            await axios.post("http://localhost:5001/cart/add", { ...item, email });
             fetchCart();
         } catch (error) {
             console.error("Error adding to cart:", error);
@@ -45,7 +45,7 @@ export const CartProvider = ({ children }) => {
         if (!email) return;
 
         try {
-            await axios.post("http://localhost:5000/cart/remove", { email, productId, color, size });
+            await axios.post("http://localhost:5001/cart/remove", { email, productId, color, size });
             fetchCart();
         } catch (error) {
             console.error("Error removing item:", error);
@@ -56,7 +56,7 @@ export const CartProvider = ({ children }) => {
         if (!email) return;
 
         try {
-            await axios.post("http://localhost:5000/cart/clear", { email });
+            await axios.post("http://localhost:5001/cart/clear", { email });
             setCartItems([]);
         } catch (error) {
             console.error("Error clearing cart:", error);
@@ -64,7 +64,7 @@ export const CartProvider = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, fetchCart }}>
             {children}
         </CartContext.Provider>
     );

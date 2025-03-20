@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import airphone from '../../assets/airphone.png';
 import Buynowbtn from '../../components/Buynowbtn';
-import Buynowcount from '../../components/Buynowcount';
+// import Buynowcount from '../../components/Buynowcount';
 import axios from 'axios';
 import Skeleton from 'react-loading-skeleton'; // Import Skeleton
 
@@ -12,7 +12,7 @@ export default function Subcategory() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/cate/");
+                const response = await axios.get("http://localhost:5001/cate/");
                 setCategory(response.data);
             } catch (error) {
                 console.error(error);
@@ -54,7 +54,7 @@ export default function Subcategory() {
                                 <h1 className="text-2xl md:text-5xl font-bold mt-4">{item.title}</h1>
 
                                 <div className='mt-4'>
-                                    <Buynowcount />
+                                    {/* <Buynowcount /> */}
                                 </div>
 
                                 <div className='mt-10'>

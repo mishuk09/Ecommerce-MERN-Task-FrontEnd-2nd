@@ -12,7 +12,7 @@ export default function Home() {
     useEffect(() => {
         const fetchSlides = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/home/offer");
+                const response = await axios.get("http://localhost:5001/home/offer");
                 setSlides(response.data);
             } catch (err) {
                 console.err(err)
@@ -62,13 +62,18 @@ export default function Home() {
     if (error) return <p className="text-red-500">{error}</p>;
     if (!slides.length) return <p>No slides available.</p>;
 
+    const stripHtmlTags = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    };
+
     return (
         <div className="relative w-full max-w-7xl mx-auto p-4">
             {/* Slide Container */}
             <div className="relative flex items-center bg-gradient-to-r from-[#051d40] via-[#244c74] to-[#2e5fa3] text-white rounded-2xl overflow-hidden p-6 md:p-4">
                 {/* Text Content */}
                 <div className="flex-1 md:ps-10 md:space-y-3">
-                    <p className="text-xs hidden md:block md:text-lg">{slides[currentIndex].subTitle}</p>
+                    <p className="text-xs hidden md:block md:text-lg">{stripHtmlTags(slides[currentIndex].description)}</p>
                     <h1 className="text-2xl md:text-5xl font-bold mt-2">{slides[currentIndex].title}</h1>
                     <p className="md:text-2xl mt-2">{slides[currentIndex].offer}</p>
                 </div>
