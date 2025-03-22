@@ -11,7 +11,8 @@ const ProductPage = ({ toggleCart }) => {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedImage, setSelectedImage] = useState(0);
-
+  const [colorImage, setColorImage] = useState(null);
+  const [hoveredImage, setHoveredImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const ProductPage = ({ toggleCart }) => {
       addToCart({
         productId: product.id,
         title: product.title,
-        img: product.img,
+        img: selectedColor,
         color: selectedColor,
         size: selectedSize,
         price: product.newPrice,
@@ -104,25 +105,34 @@ const ProductPage = ({ toggleCart }) => {
             {/* Product Image */}
             <div className="w-full flex gap-6 md:w-1/2">
               {/* Thumbnails */}
-              <div className="flex flex-col  space-y-2">
-                {Array.isArray(product.img) && product.img.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img}
-                    alt={`Thumbnail ${index}`}
-                    className={`w-16 h-16 object-cover rounded-lg cursor-pointer ${selectedImage === index ? 'border-2 border-blue-500' : ''}`}
-                    onClick={() => setSelectedImage(index)}
-                  />
-                ))}
+              <div className="flex flex-col space-y-2">
+                {Array.isArray(product.img) &&
+                  product.img.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={`Thumbnail ${index}`}
+                      className={`w-16 h-16 object-cover rounded-lg cursor-pointer transition-transform duration-200 ease-in-out ${selectedImage === index ? 'border-2 border-blue-500 scale-105' : 'hover:scale-105'
+                        }`}
+                      onClick={() => setSelectedImage(index)}
+                      onMouseEnter={() => setHoveredImage(img)}
+                      onMouseLeave={() => setHoveredImage(null)}
+                    />
+                  ))}
               </div>
-              <div>
+
+              {/* Main Image */}
+              <div className="relative">
                 <img
-                  className="w-full h-40 md:h-[500px] object-cover rounded-lg shadow-md"
-                  src={Array.isArray(product.img) ? product.img[selectedImage] : product.img}
+                  className="w-full h-40 md:h-[500px] object-cover rounded-lg shadow-md transition-all duration-500 ease-in-out"
+                  src={
+                    hoveredImage ||
+                    colorImage ||
+                    (Array.isArray(product.img) ? product.img[selectedImage] : product.img)
+                  }
                   alt={product.title}
                 />
               </div>
-
             </div>
 
             {/* Product Details */}
@@ -155,7 +165,30 @@ const ProductPage = ({ toggleCart }) => {
               <div className="mb-4 mt-6">
                 <label className="block mb-2 text-sm font-semibold text-gray-700">Color</label>
                 <div className="flex flex-wrap gap-2">
-                  {product.color.map(color => (
+
+
+
+                  {/* Color Options */}
+                  <div className="flex space-x-2">
+                    {Array.isArray(product.img) &&
+                      product.img.map((img, index) => (
+                        <img
+                          key={index}
+                          src={img}
+                          alt={`Color Option ${index}`}
+                          onClick={() => {
+                            setSelectedColor(img);
+                            setColorImage(img);
+                          }}
+                          onMouseEnter={() => setHoveredImage(img)}
+                          onMouseLeave={() => setHoveredImage(null)}
+                          className={`w-8 h-10 object-cover rounded-lg cursor-pointer transition-transform duration-200 ease-in-out ${colorImage === img ? 'border-2 border-blue-500 scale-105' : 'hover:scale-105'
+                            }`}
+                        />
+                      ))}
+                  </div>
+
+                  {/* {product.color.map(color => (
                     <button
                       key={color}
                       aria-label={`Select ${color}`}
@@ -167,7 +200,7 @@ const ProductPage = ({ toggleCart }) => {
                         <span className="absolute inset-0 flex items-center justify-center text-white font-bold">✓</span>
                       )}
                     </button>
-                  ))}
+                  ))} */}
                 </div>
               </div>
 

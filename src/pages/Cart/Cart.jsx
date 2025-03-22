@@ -69,7 +69,7 @@ const Cart = ({ isOpen, toggleCart }) => {
                                         <p className="font-semibold">
                                             {item.title.split(' ').slice(0, 3).join(' ')}
                                         </p>
-                                        <p className="text-sm">Variant: {item.color} / {item.size}</p>
+                                        <p className="text-sm flex space-x-2">Variant: <img src={item.color} className='w-5 h-6' alt="" /> / {item.size}</p>
                                         <p className="text-sm">Qty: {item.quantity}</p>
                                         <p className="mt-2 font-bold">$ {item.price * item.quantity}</p>
                                         <button
