@@ -117,6 +117,8 @@ const Collection = () => {
         }
 
         setFilteredPosts(newFilteredPosts);
+        setCurrentPage(1);
+
     };
 
 

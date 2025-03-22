@@ -73,16 +73,23 @@ const Allproduct = () => {
                     ))
                     : currentItems.length > 0 ? (
                         currentItems.map((product) => (
-
-                            <div key={product._id} className="relative bg-white rounded  ">
+                            <div key={product._id} className="relative bg-white rounded">
                                 <a href={`/product/${product._id}`}>
                                     <div className="overflow-hidden bg-gray-100 rounded-sm">
-                                        <img
-                                            src={product.img}
-                                            alt={product.title}
-                                            className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
-                                        />
-                                        <span className="absolute sell-color text-white top-3 left-3    text-xs px-2 py-1 rounded"> - {(((product.oldPrice - product.newPrice) / product.newPrice * 100).toFixed(0))} % </span>
+                                        {
+                                            Array.isArray(product.img) && product.img.length > 0 ? (
+                                                product.img.slice(0, 1).map((imageUrl, index) => (
+                                                    <img key={index} src={imageUrl} alt={product.title} className="w-full h-full object-cover rounded " />
+                                                ))
+                                            ) : (
+                                                <span>No image available</span>
+                                            )
+                                        }
+
+
+                                        <span className="absolute sell-color text-white top-3 left-3 text-xs px-2 py-1 rounded">
+                                            - {(((product.oldPrice - product.newPrice) / product.newPrice * 100).toFixed(0))} %
+                                        </span>
                                     </div>
                                 </a>
 
@@ -106,22 +113,20 @@ const Allproduct = () => {
                                     <div>
                                         <div>
                                             <span className="new-price font-medium">${product.newPrice}</span>
-                                            <span className="  line-through text-gray-500 ml-2">${product.oldPrice}</span>
+                                            <span className="line-through text-gray-500 ml-2">${product.oldPrice}</span>
                                         </div>
-
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        {/* <MadeBy /> */}
                                     </div>
                                 </div>
                             </div>
                         ))
+
+
                     ) : (
                         <tr>
                             <td colSpan="10" className="text-center py-4">No items</td>
                         </tr>
                     )}
-            </div>
+            </div >
 
             <div className="pagination max-w-7xl mx-auto  flex justify-end  mt-10   space-x-2 p-4">
                 <button
@@ -149,7 +154,7 @@ const Allproduct = () => {
                 </button>
             </div>
 
-        </div>
+        </div >
     );
 };
 

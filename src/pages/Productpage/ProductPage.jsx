@@ -10,6 +10,7 @@ const ProductPage = ({ toggleCart }) => {
   const [loading, setLoading] = useState(true); // Optionally for loading state
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
+  const [selectedImage, setSelectedImage] = useState(0);
 
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
@@ -101,12 +102,27 @@ const ProductPage = ({ toggleCart }) => {
 
           <div className="flex flex-col md:flex-row md:space-x-8 space-y-6 md:space-y-0">
             {/* Product Image */}
-            <div className="w-full md:w-1/2">
-              <img
-                className="w-full h-64 md:h-full object-cover rounded-lg shadow-md"
-                src={product.img}
-                alt={product.title}
-              />
+            <div className="w-full flex gap-6 md:w-1/2">
+              {/* Thumbnails */}
+              <div className="flex flex-col  space-y-2">
+                {Array.isArray(product.img) && product.img.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`Thumbnail ${index}`}
+                    className={`w-16 h-16 object-cover rounded-lg cursor-pointer ${selectedImage === index ? 'border-2 border-blue-500' : ''}`}
+                    onClick={() => setSelectedImage(index)}
+                  />
+                ))}
+              </div>
+              <div>
+                <img
+                  className="w-full h-40 md:h-[500px] object-cover rounded-lg shadow-md"
+                  src={Array.isArray(product.img) ? product.img[selectedImage] : product.img}
+                  alt={product.title}
+                />
+              </div>
+
             </div>
 
             {/* Product Details */}
