@@ -14,6 +14,7 @@ const Collection = () => {
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [filterOpen, setFilterOpen] = useState(false);
     const { wishlist, toggleWishlist } = useWishlist();
+    const [hoverImg, setHoverImg] = useState(null);
     const [filters, setFilters] = useState({
         color: [],
         priceRange: [0, 1000],
@@ -272,11 +273,16 @@ const Collection = () => {
                             <div key={product._id} className="relative bg-white rounded-sm shadow-md">
                                 <Link to={`/product/${product._id}`}>
                                     <div className="overflow-hidden rounded-sm">
-                                        <img
-                                            src={product.img}
-                                            alt={product.title}
-                                            className={`w-full    ${filterOpen ? " h-[150px]" : " h-[200px]"}   object-cover transform hover:scale-110 transition-transform duration-300`}
-                                        />
+
+                                        {Array.isArray(product.img) &&
+                                            product.img.slice(0, 1).map((img, index) => (
+                                                <img key={index}
+                                                    // src={  hoverImg ? product.img[hoverImg || index] : img}
+                                                    src={img}
+                                                    alt={product.index}
+                                                    className={`w-full    ${filterOpen ? " h-[150px]" : " h-[200px]"}   object-cover transform hover:scale-110 transition-transform duration-300`}
+                                                />
+                                            ))}
                                         <span className="absolute top-2 left-2 bg-gray-200 text-red-400 text-xs px-2 py-1 rounded">
                                             Sale
                                         </span>
@@ -296,15 +302,19 @@ const Collection = () => {
                                 </button>
 
                                 <div className="ps-2  ">
-                                    <div className="flex space-x-1 pt-2">
-                                        {product.color.map(color => (
-                                            <button
-                                                key={color}
-                                                aria-label={`Select ${color}`}
-                                                className="relative w-4 h-4 md:w-6 md:h-6 rounded-full border-1 border-gray hover:border-gray-500 duration-75"
-                                                style={{ backgroundColor: color.toLowerCase() }}
-                                            />
-                                        ))}
+                                    <div className="flex space-x-1 pt-3">
+                                        {Array.isArray(product.img) &&
+                                            product.img.map((img, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={img}
+                                                    alt={`Color Option ${index}`}
+                                                    onMouseEnter={() => setHoverImg(index)}
+                                                    onMouseLeave={() => setHoverImg(null)}
+                                                    className={`w-6 h-8 object-cover rounded-lg cursor-pointer transition duration-300 ease-in-out border-1 hover:border-2  border-blue-500 scale-105' : 'hover:scale-105'
+                                                        }`}
+                                                />
+                                            ))}
                                     </div>
                                     <h2 className="   product-card__title text-start pt-1 lg:pt-3 font-medium text-gray-900">
                                         {product.title}
