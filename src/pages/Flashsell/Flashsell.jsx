@@ -100,11 +100,15 @@ const Flashsell = () => {
                         <div key={product._id} className="relative bg-white rounded shadow-md">
                             <a href={`/product/${product._id}`}>
                                 <div className="overflow-hidden bg-gray-100 rounded-sm">
-                                    <img
-                                        src={product.img}
-                                        alt={product.title}
-                                        className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
-                                    />
+                                    {
+                                        Array.isArray(product.img) && product.img.length > 0 ? (
+                                            product.img.slice(0, 1).map((imageUrl, index) => (
+                                                <img key={index} src={imageUrl} alt={product.title} className="w-full h-full object-cover rounded " />
+                                            ))
+                                        ) : (
+                                            <span>No image available</span>
+                                        )
+                                    }
                                     <span className="absolute sell-color text-white top-3 left-3    text-xs px-2 py-1 rounded"> - {(((product.oldPrice - product.newPrice) / product.newPrice * 100).toFixed(0))} % </span>
                                 </div>
                             </a>
@@ -123,6 +127,19 @@ const Flashsell = () => {
                             </button>
 
                             <div className='ps-2'>
+                                
+                                <div className="flex space-x-1 pt-3 ">
+                                    {Array.isArray(product.img) &&
+                                        product.img.map((img, index) => (
+                                            <img
+                                                key={index}
+                                                src={img}
+                                                alt={`Color Option ${index}`}
+                                                className={`w-6 h-8 object-cover rounded cursor-pointer transition duration-300 ease-in-out border-1 hover:border-2  border-blue-500 scale-105' : 'hover:scale-105'
+                                                        }`}
+                                            />
+                                        ))}
+                                </div>
                                 <h2 className="text-base product-card__title text-start pt-1 md:pt-3 font-semibold text-gray-900">
                                     {product.title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()).substring(0, 20)}{product.title.length > 20 ? '...' : ''}
                                 </h2>

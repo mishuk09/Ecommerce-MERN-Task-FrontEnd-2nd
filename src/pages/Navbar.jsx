@@ -71,7 +71,12 @@ export default function Navbar({ toggleCart, isCartOpen }) {
                     searchResults.map((product) => (
                       <a key={product._id} href={`/product/${product._id}`} className="block px-4 py-2 boder-b hover:bg-gray-100">
                         <div className="flex items-center space-x-3   ">
-                          <img src={product.img} alt={product.title} className="w-10 h-10 object-cover rounded-md" />
+                          {
+                            Array.isArray(product.img) && product.img.slice(0, 1).map((imageUrl, index) => (
+
+                              <img key={index} src={imageUrl} alt={product.title} className="w-10 h-10 object-cover rounded-md" />))
+                          }
+                          {/* <img src={product.img} alt={product.title} className="w-10 h-10 object-cover rounded-md" /> */}
                           <span>{product.title}</span>
                         </div>
                       </a>

@@ -95,11 +95,15 @@ const Bestseeling = () => {
                         <div key={product._id} className="relative bg-white rounded shadow-md">
                             <a href={`/product/${product._id}`}>
                                 <div className="overflow-hidden bg-gray-100 rounded-sm">
-                                    <img
-                                        src={product.img}
-                                        alt={product.title}
-                                        className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
-                                    />
+                                    {
+                                        Array.isArray(product.img) && product.img.length > 0 ? (
+                                            product.img.slice(0, 1).map((imageUrl, index) => (
+                                                <img key={index} src={imageUrl} alt={product.title} className="w-full h-full object-cover rounded " />
+                                            ))
+                                        ) : (
+                                            <span>No image available</span>
+                                        )
+                                    }
                                     <span className="absolute sell-color text-white top-3 left-3    text-xs px-2 py-1 rounded"> - {(((product.oldPrice - product.newPrice) / product.newPrice * 100).toFixed(0))} % </span>
                                 </div>
                             </a>

@@ -125,7 +125,7 @@ const ProductPage = ({ toggleCart }) => {
                       key={index}
                       src={img}
                       alt={`Thumbnail ${index}`}
-                      className={`w-16 h-16 object-cover rounded-lg cursor-pointer transition-transform duration-200 ease-in-out ${selectedImage === index ? 'border-2 border-blue-500 scale-105' : 'hover:scale-105'
+                      className={`w-16 h-16 object-cover   rounded-lg cursor-pointer transition-transform duration-200 ease-in-out ${selectedImage === index ? 'border-2 border-blue-500 scale-105' : 'hover:scale-105 border border-gray-300'
                         }`}
                       onClick={() => setSelectedImage(index)}
                       onMouseEnter={() => setHoveredImage(img)}
@@ -225,7 +225,7 @@ const ProductPage = ({ toggleCart }) => {
                     <button
                       key={size}
                       aria-label={`Select size ${size}`}
-                      className={`relative w-8 h-10 rounded border-2 border-gray-400  hover:border-gray-600 duration-75  ${selectedSize === size ? 'bg-gray-800 text-white' : 'bg-white text-gray-700'}`}
+                      className={`w-10 h-10 object-cover rounded border-1 border-blue-500 cursor-pointer transition-transform duration-200 ease-in-out   ${selectedSize === size ? 'border-2 border-blue-500 scale-105' : 'hover:scale-105'}`}
                       onClick={() => setSelectedSize(size)}
                     >
                       {size}

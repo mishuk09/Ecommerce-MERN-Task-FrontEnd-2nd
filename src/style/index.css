@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Jost', sans-serif;
- }
+}
 
 :root {
     --primary-color: #DB4444;
@@ -28,7 +28,8 @@ body {
 .checkout-btn,
 .signin-btn,
 .signup-btn,
-.add-to-cart  {
+.add-to-cart,
+.size-clr {
     background-color: var(--primary-color);
 }
 
