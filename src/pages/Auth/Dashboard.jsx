@@ -180,7 +180,7 @@ const Dashboard = () => {
                 <div className="tabs    profile-head">
 
                     <div className="dashbord-parent md:px-1 lg:px-3 bg-white">
-                        <div className="tab-links h-[200px] grid rounded">
+                        <div className="tab-links min-w-[250px] h-[200px] grid rounded">
                             <div
                                 className={`flex items-center text-center cursor-pointer p-2 rounded ${activeTab === "tab1" ? "bg-gray-200 text-black" : "bg-white"
                                     }`}
@@ -319,7 +319,7 @@ const Dashboard = () => {
                             </div>
                         )}
                         {activeTab === "tab2" && (
-                            <div className="tab">
+                            <div className="tab ">
                                 <p className="sm:text-[24px] text-[20px] font-medium mt-0">Order history</p>
                                 {order.map((order) => (
                                     <div key={order._id} className="rounded bg-blue-50 mb-4">
@@ -361,7 +361,7 @@ const Dashboard = () => {
                                         </div>
 
                                         {order.cartItems.map((item) => (
-                                            <div key={item.productId} className="cart-body-child border-gray-300 relative order-cart-d rounded-b border text-[14px] p-4 flex">
+                                            <div key={item.productId} className="cart-body-child   border-gray-300 relative order-cart-d rounded-b border text-[14px] p-4 flex">
                                                 <div className="w-[100px] md:w-[120px] h-[100px] md:h-full overflow-hidden flex md:items-center">
                                                     <img className="w-[100px] h-[100px] hover:scale-105 duration-300" src={item.img} alt={item.title} />
                                                 </div>
@@ -370,9 +370,9 @@ const Dashboard = () => {
                                                         <a href={`/products/${item._id}`} className="text-green-600 font-medium cart-p-title">
                                                             {item.title}
                                                         </a>
-                                                        <div className="lg:flex hidden items-center price-color lg:mt-0">
-                                                            <p className="text-[14px] font-medium me-2 cursor-auto">Color: {item.color}</p>
-                                                            <p className="text-[14px] font-semibold me-2 cursor-auto">Size: {item.size}</p>
+                                                        <div className="lg:flex hidden items-center   lg:mt-0">
+                                                            <p className="text-[14px] flex font-medium me-2 cursor-auto">Color: <img className="w-10 h-10 hover:scale-105 duration-300" src={item.img} alt={item.title} /></p>
+                                                            <p className="text-[14px] flex font-semibold me-2 cursor-auto">Size: {item.size}</p>
                                                         </div>
                                                     </div>
                                                     <div className="h-auto lg:h-full px-1 text-[14px] flex lg:items-center lg:text-center lg:justify-center">
