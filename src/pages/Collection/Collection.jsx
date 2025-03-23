@@ -271,8 +271,8 @@ const Collection = () => {
                     ) : currentItems.length > 0 ? (
                         currentItems.map(product => (
                             <div key={product._id} className="relative bg-white rounded-sm shadow-md">
-                                <Link to={`/product/${product._id}`}>
-                                    <div className="overflow-hidden rounded-sm">
+                                <a href={`/product/${product._id}`}>
+                                    <div className="overflow-hidden bg-gray-50 rounded-sm">
 
                                         {Array.isArray(product.img) &&
                                             product.img.slice(0, 1).map((img, index) => (
@@ -287,7 +287,7 @@ const Collection = () => {
                                             Sale
                                         </span>
                                     </div>
-                                </Link>
+                                </a>
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -302,7 +302,7 @@ const Collection = () => {
                                 </button>
 
                                 <div className="ps-2  ">
-                                    <div className="flex space-x-1 pt-3">
+                                    <div className="flex space-x-1 pt-3 ">
                                         {Array.isArray(product.img) &&
                                             product.img.map((img, index) => (
                                                 <img
@@ -311,7 +311,7 @@ const Collection = () => {
                                                     alt={`Color Option ${index}`}
                                                     onMouseEnter={() => setHoverImg(index)}
                                                     onMouseLeave={() => setHoverImg(null)}
-                                                    className={`w-6 h-8 object-cover rounded-lg cursor-pointer transition duration-300 ease-in-out border-1 hover:border-2  border-blue-500 scale-105' : 'hover:scale-105'
+                                                    className={`w-6 h-8 object-cover rounded cursor-pointer transition duration-300 ease-in-out border-1 hover:border-2  border-blue-500 scale-105' : 'hover:scale-105'
                                                         }`}
                                                 />
                                             ))}

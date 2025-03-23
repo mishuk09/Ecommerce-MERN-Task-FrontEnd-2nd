@@ -135,9 +135,9 @@ const ProductPage = ({ toggleCart }) => {
               </div>
 
               {/* Main Image */}
-              <div className="relative">
+              <div className="relative bg-gray-50">
                 <img
-                  className="w-full h-40 md:h-[500px] object-cover rounded-lg shadow-md transition-all duration-500 ease-in-out"
+                  className="w-full h-40 md:h-[500px] object-cover   transition-all duration-500 ease-in-out"
                   src={
                     hoveredImage ||
                     colorImage ||
@@ -182,7 +182,7 @@ const ProductPage = ({ toggleCart }) => {
 
 
                   {/* Color Options */}
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-2 ">
                     {Array.isArray(product.img) &&
                       product.img.map((img, index) => (
                         <img

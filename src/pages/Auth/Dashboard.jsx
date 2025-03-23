@@ -367,7 +367,7 @@ const Dashboard = () => {
                                                 </div>
                                                 <div className="cart-body-child5  flex flex-col justify-between">
                                                     <div className="w-full">
-                                                        <a href={`/products/${item._id}`} className="text-green-600 font-medium cart-p-title">
+                                                        <a href='' className="text-green-600 font-medium cart-p-title">
                                                             {item.title}
                                                         </a>
                                                         <div className="lg:flex hidden items-center   lg:mt-0">
