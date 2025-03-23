@@ -3,6 +3,7 @@ import { useState } from "react";
 import RedAlert from "../../components/RedAlert";
 import Alert from "../../components/Alert";
 import { useNavigate } from "react-router";
+import LoadingSpin from "../../components/LoadingSpin";
 
 
 const SignUp = () => {
@@ -10,12 +11,14 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         setError(null); // Reset error before request
 
         const userData = { firstName, lastName, email, password };
@@ -33,6 +36,8 @@ const SignUp = () => {
                 setError(null);
             }, 2000)
             console.error("Signup Error:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -104,9 +109,11 @@ const SignUp = () => {
 
                     <button
                         type="submit"
-                        className="w-full p-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full h-12 p-3 signup-btn text-white  rounded-lg  transition duration-200 focus:outline-none  "
                     >
-                        Sign Up
+                        {
+                            loading ? <LoadingSpin /> : 'Sign Up'
+                        }
                     </button>
                 </form>
 

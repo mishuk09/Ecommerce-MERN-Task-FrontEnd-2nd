@@ -5,11 +5,20 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import RedAlert from '../../components/RedAlert';
+import CartDelLoading from '../../components/CartDelLoading';
 
 const Cart = ({ isOpen, toggleCart }) => {
     const { cartItems, removeFromCart } = useCart();
     const [error, setError] = useState(false);
     const navigate = useNavigate();
+    const [loadingItemId, setLoadingItemId] = useState(null);
+
+    const handleRemove = async (productId, color, size) => {
+        setLoadingItemId(`${productId}-${color}-${size}`);
+        await removeFromCart(productId, color, size);
+        setLoadingItemId(null);
+    };
+
 
     const handleCheckout = () => {
         if (cartItems.length === 0) {
@@ -73,11 +82,17 @@ const Cart = ({ isOpen, toggleCart }) => {
                                         <p className="text-sm">Qty: {item.quantity}</p>
                                         <p className="mt-2 font-bold">$ {item.price * item.quantity}</p>
                                         <button
-                                            onClick={() => removeFromCart(item.id, item.color, item.size)}
+                                            onClick={() => handleRemove(item.id, item.color, item.size)}
                                             className="text-red-500 absolute top-0 right-2 mt-1 text-sm"
+                                            disabled={loadingItemId === `${item.id}-${item.color}-${item.size}`}
                                         >
-                                            <FontAwesomeIcon icon={faTrash} />
+                                            {loadingItemId === `${item.id}-${item.color}-${item.size}` ? (
+                                                <CartDelLoading />
+                                            ) : (
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            )}
                                         </button>
+
                                     </div>
                                 </div>
                             ))

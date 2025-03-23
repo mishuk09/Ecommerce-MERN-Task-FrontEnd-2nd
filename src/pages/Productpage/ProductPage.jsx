@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useCart } from '../Cart/CartContext';
+import RedAlert from '../../components/RedAlert';
 
 const ProductPage = ({ toggleCart }) => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ const ProductPage = ({ toggleCart }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [colorImage, setColorImage] = useState(null);
   const [hoveredImage, setHoveredImage] = useState(null);
+  const [alert, setAlert] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
   const navigate = useNavigate();
@@ -66,6 +68,14 @@ const ProductPage = ({ toggleCart }) => {
 
 
   const handleAddToCart = () => {
+    if (!selectedColor) {
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+      return;
+    }
+
     const token = localStorage.getItem('token');
     if (token) {
       addToCart({
@@ -94,6 +104,9 @@ const ProductPage = ({ toggleCart }) => {
 
   return (
     <div className="container mt-10 mb-20 mx-auto p-4">
+      {alert && (
+        <RedAlert name='Please select Color & Size' />
+      )}
       {
         loading ? (
           <div className="flex justify-center items-center h-screen">

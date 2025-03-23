@@ -6,11 +6,12 @@ import master from '../../assets/footer/master.svg';
 import visa from '../../assets/footer/visa.svg';
 import axios from 'axios';
 import Alert from '../../components/Alert';
+import LoadingSpin from '../../components/LoadingSpin';
 
 const Checkout = () => {
-    const { cartItems, setCartItems } = useCart();
+    const { cartItems, setCartItems, clearCart } = useCart();
     const [success, setSuccess] = useState(false);
-    const { clearCart } = useCart();
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -74,6 +75,7 @@ const Checkout = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const newErrors = { ...validateForm(), ...validateCardDetails() };
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -113,6 +115,9 @@ const Checkout = () => {
         } catch (error) {
             console.error('Error placing order:', error);
         }
+        finally {
+            setLoading(false);
+        }
     };
 
     const calculateTotal = () => {
@@ -131,77 +136,104 @@ const Checkout = () => {
             <div className="flex container flex-col lg:flex-row gap-10">
                 <div className="w-full border-r-1 border-gray-300 pe-10 pt-6">
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-6">
+                        <div className="mb-6 space-y-4">
                             <h2 className="text-xl font-semibold mb-4">1. General Information</h2>
-                            <input
-                                type="text"
-                                name="fullName"
-                                value={formData.fullName}
-                                onChange={handleChange}
-                                className={`w-full p-2 mb-2 border rounded border-gray-300 ${errors.fullName ? 'border-red-500' : ''}`}
-                                required
-                            />
-                            {errors.fullName && <p className="text-red-500">{errors.fullName}</p>}
-                            <label className="block mb-2 text-base">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                className="w-full p-2 mb-2 border rounded border-gray-300"
-                            />
-                            <label className="block mb-2 text-base">Phone Number *</label>
-                            <div className="flex mb-4">
-                                {/* <span className="inline-flex text-base items-center px-3 border border-r-0 rounded-l bg-gray-200">AUG</span> */}
+
+                            {/* Full Name */}
+                            <div>
+                                <label className="block mb-1 text-base font-medium">Full Name *</label>
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    value={formData.fullName}
+                                    onChange={handleChange}
+                                    className={`w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.fullName ? 'border-red-500' : ''}`}
+                                    required
+                                />
+                                {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+                            </div>
+
+                            {/* Email */}
+                            <div>
+                                <label className="block mb-1 text-base font-medium">Email *</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            {/* Phone Number */}
+                            <div>
+                                <label className="block mb-1 text-base font-medium">Phone Number *</label>
                                 <input
                                     type="tel"
                                     name="phoneNumber"
                                     value={formData.phoneNumber}
                                     onChange={handleChange}
-                                    className={`w-full p-2 border rounded border-gray-300 ${errors.phoneNumber ? 'border-red-500' : ''}`}
+                                    className={`w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.phoneNumber ? 'border-red-500' : ''}`}
                                     required
                                 />
+                                {errors.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>}
                             </div>
-                            {errors.phoneNumber && <p className="text-red-500">{errors.phoneNumber}</p>}
-                            <label className="block mb-2 text-base">Order Note (any message for us)</label>
-                            <textarea
-                                name="orderNote"
-                                defaultValue={formData.orderNote}
-                                onChange={handleChange}
-                                className="w-full min-h-10 max-h-[100px] border-gray-300 p-2 mb-2 border rounded"
-                            ></textarea>
 
+                            {/* Order Note */}
+                            <div>
+                                <label className="block mb-1 text-base font-medium">Order Note (any message for us)</label>
+                                <textarea
+                                    name="orderNote"
+                                    defaultValue={formData.orderNote}
+                                    onChange={handleChange}
+                                    className="w-full min-h-10 max-h-[100px] p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                ></textarea>
+                            </div>
                         </div>
-                        <div className="mb-6">
+
+                        <div className="mb-6 space-y-4">
                             <h2 className="text-xl font-semibold mb-4">2. Delivery Address</h2>
-                            <label className="block mb-2 text-base">City / District *</label>
-                            <input
-                                name="city"
-                                value={formData.city}
-                                onChange={handleChange}
-                                className={`w-full p-2 mb-2 border rounded border-gray-300 ${errors.city ? 'border-red-500' : ''}`}
-                                required
-                            />
-                            {errors.city && <p className="text-red-500">{errors.city}</p>}
-                            <label className="block mb-2 text-base">Address *</label>
-                            <input
-                                type="text"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleChange}
-                                className={`w-full p-2 mb-2 border rounded border-gray-300 ${errors.address ? 'border-red-500' : ''}`}
-                                required
-                            />
-                            {errors.address && <p className="text-red-500">{errors.address}</p>}
-                            <label className="block mb-2 text-base">PIN code</label>
-                            <input
-                                type="text"
-                                name="landmark"
-                                value={formData.landmark}
-                                onChange={handleChange}
-                                className="w-full p-2 mb-2 border rounded border-gray-300"
-                            />
+
+                            {/* City / District */}
+                            <div>
+                                <label className="block mb-1 text-base font-medium">City / District *</label>
+                                <input
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    className={`w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.city ? 'border-red-500' : ''}`}
+                                    required
+                                />
+                                {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
+                            </div>
+
+                            {/* Address */}
+                            <div>
+                                <label className="block mb-1 text-base font-medium">Address *</label>
+                                <input
+                                    type="text"
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
+                                    className={`w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.address ? 'border-red-500' : ''}`}
+                                    required
+                                />
+                                {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
+                            </div>
+
+                            {/* PIN Code */}
+                            <div>
+                                <label className="block mb-1 text-base font-medium">PIN Code</label>
+                                <input
+                                    type="text"
+                                    name="landmark"
+                                    value={formData.landmark}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
                         </div>
+
                         <div className="mb-6">
                             <h2 className="text-xl font-semibold mb-4">3. Payment Methods</h2>
                             {paymentMethod === 'Card Payment' && (
@@ -253,10 +285,13 @@ const Checkout = () => {
                                         </div>
                                     </div>
                                     <button
+                                        disabled={cartItems.length === 0}
                                         type="submit"
-                                        className="w-full p-3 mt-4 pay-btn text-white font-bold rounded"
+                                        className={`w-full p-3 mt-4 pay-btn ${clearCart.length == 0 ? "" : ""} text-white font-bold rounded`}
                                     >
-                                        Pay Now
+                                        {
+                                            loading ? <LoadingSpin /> : cartItems.length === 0 ? "Your Cart Empty" : "Pay Now"
+                                        }
                                     </button>
                                 </div>
                             )}
@@ -270,28 +305,42 @@ const Checkout = () => {
                     <div className="mb-6 bg-white rounded-lg shadow-md">
                         <h2 className="text-xl font-semibold mb-4 px-6 py-4 bg-gray-100 rounded-t-lg">Order Summary</h2>
                         <div className="max-h-60 overflow-y-auto">
-                            {cartItems.map((item, index) => (
-                                <div key={`${item.id}-${index}`} className='flex items-center gap-4 px-6 py-4 border-b border-gray-200'>
-                                    <img className='w-20 h-20 object-cover rounded-lg' src={item.img} alt={item.title} />
-                                    <div className="flex-1">
-                                        <p className="font-semibold">{item.title}</p>
-                                        <p className="text-base text-gray-600">Variant: {item.color} / {item.size}</p>
-                                        <p className="text-gray-800">$ {item.price} x {item.quantity}</p>
-                                    </div>
-                                </div>
-                            ))}
+                            {
+                                cartItems && cartItems.length > 0 ? (
+
+                                    cartItems.map((item, index) => (
+                                        <div key={`${item.id}-${index}`} className="px-6 py-2 border-b border-gray-300 flex justify-between items-center">
+                                            <div className="flex gap-2 items-center">
+                                                <img
+                                                    className="w-16 h-16 object-cover rounded"
+                                                    src={item.img}
+                                                    alt={item.title}
+                                                />
+                                                <div>
+                                                    <p className="font-semibold">{item.title.split(' ').slice(0, 3).join(' ')}</p>
+                                                    <p className="text-sm flex space-x-2">Variant: <img src={item.color} className='w-5 h-6' alt="" /> / {item.size}</p>
+                                                    <p className="text-sm">Qty: {item.quantity}</p>
+                                                </div>
+                                            </div>
+                                            <p className="font-semibold">$ {item.price * item.quantity}</p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-center p-4">Your cart is empty</p>
+                                )
+                            }
                         </div>
-                        <div className="flex justify-between px-6 py-4">
-                            <span className="font-semibold">Sub-total</span>
+                        <div className="flex justify-between px-6 py-2 mt-4">
+                            <span className="font-medium">Sub-total</span>
                             <span>$ {calculateTotal()}</span>
                         </div>
-                        <div className="flex justify-between px-6 py-4">
-                            <span className="font-semibold">Delivery Charge</span>
+                        <div className="flex justify-between border-b border-gray-300 px-6 py-2">
+                            <span className="font-medium">Delivery Charge</span>
                             <span>$ 100</span>
                         </div>
-                        <div className="flex justify-between px-6 py-4">
-                            <span className="font-semibold text-lg">Total</span>
-                            <span className="text-lg font-semibold">$ {calculateTotal() + 100}</span>
+                        <div className="flex justify-between px-6 py-2">
+                            <span className="font-semibold text-xl">Total</span>
+                            <span className="text-xl font-semibold">$ {calculateTotal() + 100}</span>
                         </div>
                     </div>
                 </div>

@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import Alert from "../../components/Alert";
 import RedAlert from "../../components/RedAlert";
 import { useCart } from "../Cart/CartContext";
+import LoadingSpin from "../../components/LoadingSpin";
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { fetchCart } = useCart();
@@ -15,6 +17,7 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         setError(null); // Reset previous errors
         const userData = { email, password };
 
@@ -53,6 +56,8 @@ const SignIn = () => {
                 setError("");
             }, 3000)
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -103,9 +108,9 @@ const SignIn = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full h-12 signin-btn p-3   text-white rounded-lg   focus:outline-none "
                     >
-                        Sign In
+                        {loading ? <LoadingSpin /> : 'Sign In'}
                     </button>
                 </form>
                 <p className="mt-4 text-center text-sm text-gray-600">
