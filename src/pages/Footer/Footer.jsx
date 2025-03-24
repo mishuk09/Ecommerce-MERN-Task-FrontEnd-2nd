@@ -9,6 +9,7 @@ import visa from '../../assets/footer/visa.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { useEffect, useState } from 'react';
+import Alert from '../../components/Alert';
 
 const Footer = () => {
     const [email, setEmail] = useState('');
@@ -39,9 +40,7 @@ const Footer = () => {
 
 
                 {popup && (
-                    <div className="fixed top-4 right-4   bg-green-600 text-white px-4 py-2 rounded-md shadow-md transition duration-300">
-                        Successfully Submitted!
-                    </div>
+                    <Alert name='Subscribe successfull..' />
                 )}
 
                 <div className='  h-auto   w-full  '>
@@ -58,7 +57,7 @@ const Footer = () => {
                             <div className="flex gap-2 mt-3">
                                 <p className="rounded-full hover:text-gray-400 text-gray-700 duration-75 border-3 flex items-center text-center justify-center w-10 h-10"><FontAwesomeIcon size='xl' icon={faFacebook} /></p>
                                 <p className="rounded-full hover:text-gray-400 text-gray-700 duration-75 border-3 flex items-center text-center justify-center w-10 h-10"><FontAwesomeIcon size='xl' icon={faInstagram} /></p>
-                               
+
                             </div>
                         </div>
 

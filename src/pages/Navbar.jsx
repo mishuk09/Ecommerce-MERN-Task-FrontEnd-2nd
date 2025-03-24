@@ -128,18 +128,27 @@ export default function Navbar({ toggleCart, isCartOpen }) {
 
             {/* Mobile Search Results Dropdown */}
             {searchQuery && (
-              <div className="absolute top-12 left-0 w-full bg-white border border-gray-300 shadow-lg rounded-md z-50 max-h-60 overflow-y-auto">
-                {searchResults.length > 0 ? (
-                  searchResults.map((product) => (
-                    <a key={product._id} href={`/product/${product._id}`} className="block px-4 py-2 hover:bg-gray-100">
-                      <div className="flex items-center space-x-3">
-                        <img src={product.img} alt={product.title} className="w-10 h-10 object-cover rounded-md" />
-                        <span>{product.title}</span>
-                      </div>
-                    </a>
-                  ))
+              <div className="absolute top-15 px-2   w-[92%] mx-auto bg-white border border-gray-300 shadow-lg rounded-md z-50 max-h-60 overflow-y-auto">
+                {loading ? (
+                  <p className="py-6">
+
+                    <CartDelLoading />
+                  </p>
                 ) : (
-                  <p className="px-4 py-2 text-gray-500">No results found</p>
+                  searchResults.length > 0 ? (
+                    searchResults.map((product) => (
+                      <a key={product._id} href={`/product/${product._id}`} className="block px-4 py-2 boder-b hover:bg-gray-100">
+                        <div className="flex items-center space-x-3">
+                          {Array.isArray(product.img) && product.img.slice(0, 1).map((imageUrl, index) => (
+                            <img key={index} src={imageUrl} alt={product.title} className="w-10 h-10 object-cover rounded-md" />
+                          ))}
+                          <span>{product.title}</span>
+                        </div>
+                      </a>
+                    ))
+                  ) : (
+                    <p className="px-4 py-2 text-gray-500">No results found</p>
+                  )
                 )}
               </div>
             )}

@@ -125,7 +125,7 @@ const ProductPage = ({ toggleCart }) => {
                       key={index}
                       src={img}
                       alt={`Thumbnail ${index}`}
-                      className={`w-16 h-16 object-cover   rounded-lg cursor-pointer transition-transform duration-200 ease-in-out ${selectedImage === index ? 'border-2 border-blue-500 scale-105' : 'hover:scale-105 border border-gray-300'
+                      className={`w-12 h-12 md:w-16 md:h-16 object-cover   rounded-lg cursor-pointer transition-transform duration-200 ease-in-out ${selectedImage === index ? 'border-2 border-blue-500 scale-105' : 'hover:scale-105 border border-gray-300'
                         }`}
                       onClick={() => setSelectedImage(index)}
                       onMouseEnter={() => setHoveredImage(img)}
@@ -135,9 +135,9 @@ const ProductPage = ({ toggleCart }) => {
               </div>
 
               {/* Main Image */}
-              <div className="relative bg-gray-50">
+              <div className="relative object-cover w-full bg-gray-50">
                 <img
-                  className="w-full h-40 md:h-[500px] object-cover   transition-all duration-500 ease-in-out"
+                  className="w-full h-full md:h-[500px] object-cover   transition-all duration-500 ease-in-out"
                   src={
                     hoveredImage ||
                     colorImage ||
@@ -151,7 +151,7 @@ const ProductPage = ({ toggleCart }) => {
             {/* Product Details */}
             <div className="w-full md:w-1/2 lg:sticky self-start top-0">
               <span className="uppercase text-xs text-gray-500">{product.category}</span>
-              <h1 className="text-3xl font-bold mt-2 mb-4">{product.title}</h1>
+              <h1 className=" text-2xl md:text-3xl font-bold mt-2 mb-4">{product.title}</h1>
 
               {/* Price Section */}
               <div>
@@ -169,7 +169,7 @@ const ProductPage = ({ toggleCart }) => {
               {/* Description */}
               <div className="mt-6">
                 <p className={product.stock <= 5 ? 'text-red-500 font-medium' : 'text-green-500 font-medium'}>
-                  {product.stock <= 5 ? '⚠️ Limited Stock' : '✅ In Stock'}
+                  {product.stock <= 5 ? `⚠️ Limited Stock (${product.stock} only)` : '✅ In Stock'}
                 </p>
 
               </div>
