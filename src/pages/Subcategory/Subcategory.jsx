@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import airphone from '../../assets/airphone.png';
 import Buynowbtn from '../../components/Buynowbtn';
 // import Buynowcount from '../../components/Buynowcount';
 import axios from 'axios';
@@ -14,6 +13,7 @@ export default function Subcategory() {
             try {
                 const response = await axios.get("http://localhost:5001/cate/");
                 setCategory(response.data);
+
             } catch (error) {
                 console.error(error);
             } finally {
@@ -63,7 +63,17 @@ export default function Subcategory() {
                             </div>
 
                             <div className="flex-1 mt-8 md:mt-0 md:pe-20 flex justify-center md:justify-end">
-                                <img src={item.image || airphone} alt={item.title} className="h-30 md:h-[350px]" />
+                                {
+                                    Array.isArray(item.img) && item.img.length > 0 ? (
+                                        item.img.slice(1, 2).map((imageUrl, index) => (
+                                            <img key={index} src={imageUrl} alt={item.title} className="h-30 md:h-[350px]" />
+                                        ))
+                                    ) : (
+                                        <span>No image available</span>
+                                    )
+                                }
+
+                                {/* <img src={item.img} alt={item.title} className="h-30 md:h-[350px]" /> */}
                             </div>
                         </div>
                     ))
