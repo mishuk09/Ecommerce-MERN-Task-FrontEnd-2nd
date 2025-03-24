@@ -11,7 +11,7 @@ export default function ProductGrid() {
     useEffect(() => {
 
         const fetchData = async () => {
-            const response = await axios.get('http://localhost:5001/new/')
+            const response = await axios.get('https://ecommerce-mern-task-backend.onrender.com/new/')
             setItems(response.data)
         }
         fetchData();

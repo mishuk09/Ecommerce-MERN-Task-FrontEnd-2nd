@@ -93,7 +93,7 @@ const Checkout = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:5001/order/create', orderData);
+            const response = await axios.post('https://ecommerce-mern-task-backend.onrender.com/order/create', orderData);
             console.log(response.data);
             setFormData({
                 fullName: '',

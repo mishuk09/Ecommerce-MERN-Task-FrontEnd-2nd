@@ -12,7 +12,7 @@ export default function Home() {
     useEffect(() => {
         const fetchSlides = async () => {
             try {
-                const response = await axios.get("http://localhost:5001/home/offer");
+                const response = await axios.get("https://ecommerce-mern-task-backend.onrender.com/home/offer");
                 setSlides(response.data);
             } catch (err) {
                 console.err(err)

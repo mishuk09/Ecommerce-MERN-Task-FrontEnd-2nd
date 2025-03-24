@@ -18,7 +18,7 @@ const Bestseeling = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5001/items/allitem');
+                const response = await axios.get('https://ecommerce-mern-task-backend.onrender.com/items/allitem');
                 setPosts(response.data.items);
                 setLoading(false);
             } catch (error) {

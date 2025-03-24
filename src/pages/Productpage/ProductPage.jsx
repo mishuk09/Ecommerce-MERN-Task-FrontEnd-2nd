@@ -24,21 +24,21 @@ const ProductPage = ({ toggleCart }) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        let response = await axios.get(`http://localhost:5001/items/${id}`);
+        let response = await axios.get(`https://ecommerce-mern-task-backend.onrender.com/items/${id}`);
         setProduct(response.data.singleItem);
         setSelectedColor(response.data.color?.[0] || '');
         setSelectedSize(response.data.size?.[0] || '');
       } catch (error) {
         if (error.response && error.response.status === 404) {
           try {
-            let newResponse = await axios.get(`http://localhost:5001/cate/${id}`);
+            let newResponse = await axios.get(`https://ecommerce-mern-task-backend.onrender.com/cate/${id}`);
             setProduct(newResponse.data.singleItem);
             setSelectedColor(newResponse.data.color?.[0] || '');
             setSelectedSize(newResponse.data.size?.[0] || '');
           } catch (newError) {
             if (newError.response && newError.response.status === 404) {
               try {
-                let newArrivalResponse = await axios.get(`http://localhost:5001/new/${id}`);
+                let newArrivalResponse = await axios.get(`https://ecommerce-mern-task-backend.onrender.com/new/${id}`);
                 setProduct(newArrivalResponse.data.singleItem);
                 setSelectedColor(newArrivalResponse.data.color?.[0] || '');
                 setSelectedSize(newArrivalResponse.data.size?.[0] || '');

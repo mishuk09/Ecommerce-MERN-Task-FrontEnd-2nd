@@ -11,7 +11,7 @@ export default function Subcategory() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:5001/cate/");
+                const response = await axios.get("https://ecommerce-mern-task-backend.onrender.com/cate/");
                 setCategory(response.data);
 
             } catch (error) {

@@ -9,7 +9,7 @@ const useWishlist = () => {
     const fetchWishlist = async () => {
         if (!email) return;
         try {
-            const res = await axios.post("http://localhost:5001/wishlist/get", { email });
+            const res = await axios.post("https://ecommerce-mern-task-backend.onrender.com/wishlist/get", { email });
             const wishlistMap = res.data.reduce((acc, item) => {
                 acc[item.productId] = true;
                 return acc;
@@ -25,9 +25,9 @@ const useWishlist = () => {
         if (!email) return;
         try {
             if (wishlist[productId]) {
-                await axios.post("http://localhost:5001/wishlist/remove", { email, productId });
+                await axios.post("https://ecommerce-mern-task-backend.onrender.com/wishlist/remove", { email, productId });
             } else {
-                await axios.post("http://localhost:5001/wishlist/add", { email, productId });
+                await axios.post("https://ecommerce-mern-task-backend.onrender.com/wishlist/add", { email, productId });
             }
             fetchWishlist(); // Refresh wishlist
         } catch (error) {

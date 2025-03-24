@@ -20,7 +20,7 @@ const Flashsell = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5001/items/allitem');
+                const response = await axios.get('https://ecommerce-mern-task-backend.onrender.com/items/allitem');
                 setPosts(response.data.items);
                 setLoading(false);
             } catch (error) {
@@ -127,7 +127,7 @@ const Flashsell = () => {
                             </button>
 
                             <div className='ps-2'>
-                                
+
                                 <div className="flex space-x-1 pt-3 ">
                                     {Array.isArray(product.img) &&
                                         product.img.map((img, index) => (

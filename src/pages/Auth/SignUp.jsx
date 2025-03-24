@@ -24,7 +24,7 @@ const SignUp = () => {
         const userData = { firstName, lastName, email, password };
 
         try {
-            await axios.post('http://localhost:5001/auth/signup', userData);
+            await axios.post('https://ecommerce-mern-task-backend.onrender.com/auth/signup', userData);
             setSuccess('Register Successfull...');
             setTimeout(() => {
                 setSuccess('');

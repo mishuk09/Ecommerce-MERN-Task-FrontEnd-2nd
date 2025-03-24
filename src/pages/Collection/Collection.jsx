@@ -27,16 +27,14 @@ const Collection = () => {
 
     // Fetch posts on mount
     useEffect(() => {
-        axios.get('http://localhost:5001/items/allitem')
+        axios.get('https://ecommerce-mern-task-backend.onrender.com/items/allitem')
             .then(response => {
                 if (Array.isArray(response.data.items)) {
                     let filteredItems;
 
                     if (category.toLowerCase() === "allproduct") {
-                        // Show all items if category is "allproduct"
                         filteredItems = response.data.items;
                     } else {
-                        // Filter by specific category
                         filteredItems = response.data.items.filter(item =>
                             item.category.toLowerCase() === category.toLowerCase()
                         );
@@ -68,7 +66,7 @@ const Collection = () => {
 
     const handleCheckboxChange = (filterType, value) => {
         const updatedFilters = { ...filters };
-        const lowerValue = value.toLowerCase(); // Convert to lowercase
+        const lowerValue = value.toLowerCase();
 
         if (updatedFilters[filterType].includes(lowerValue)) {
             // Remove the value from the array if it's already included
@@ -277,7 +275,7 @@ const Collection = () => {
                                         {Array.isArray(product.img) &&
                                             product.img.slice(0, 1).map((img, index) => (
                                                 <img key={index}
-                                                    // src={  hoverImg ? product.img[hoverImg || index] : img}
+                                                    // src={hoverImg ? product.img[hoverImg || index] : img}
                                                     src={img}
                                                     alt={product.index}
                                                     className={`w-full    ${filterOpen ? " h-[150px]" : " h-[200px]"}   object-cover transform hover:scale-110 transition-transform duration-300`}

@@ -3,10 +3,12 @@ import { Menu, Search, User, ShoppingCart } from "lucide-react";
 import Cart from "./Cart/Cart";
 import PropTypes from "prop-types";
 import { useCart } from "./Cart/CartContext";
+import CartDelLoading from "../components/CartDelLoading";
 
 export default function Navbar({ toggleCart, isCartOpen }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [authenticate, setIsAuthenticate] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { cartItems } = useCart();
 
   // Search states
@@ -21,6 +23,7 @@ export default function Navbar({ toggleCart, isCartOpen }) {
   // Fetch search results dynamically
   const handleSearch = async (event) => {
     const query = event.target.value;
+    setLoading(true)
     setSearchQuery(query);
 
     if (query.trim() === "") {
@@ -29,13 +32,15 @@ export default function Navbar({ toggleCart, isCartOpen }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:5001/items/search?q=${query}`);
+      const response = await fetch(`https://ecommerce-mern-task-backend.onrender.com/items/search?q=${query}`);
       const data = await response.json();
 
       setSearchResults(data.items || []);
     } catch (error) {
       console.error("Error fetching search results:", error);
       setSearchResults([]);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -66,23 +71,27 @@ export default function Navbar({ toggleCart, isCartOpen }) {
 
               {/* Search Results Dropdown */}
               {searchQuery && (
-                <div className="absolute top-12 w-2/4 bg-white border border-gray-300 shadow-lg rounded-md z-50 max-h-60 overflow-y-auto">
-                  {searchResults.length > 0 ? (
-                    searchResults.map((product) => (
-                      <a key={product._id} href={`/product/${product._id}`} className="block px-4 py-2 boder-b hover:bg-gray-100">
-                        <div className="flex items-center space-x-3   ">
-                          {
-                            Array.isArray(product.img) && product.img.slice(0, 1).map((imageUrl, index) => (
+                <div className="absolute top-12 w-2/4 min-h-20  bg-white border border-gray-300 shadow-lg rounded-md z-50 max-h-60 overflow-y-auto">
+                  {loading ? (
+                    <p className="py-6">
 
-                              <img key={index} src={imageUrl} alt={product.title} className="w-10 h-10 object-cover rounded-md" />))
-                          }
-                          {/* <img src={product.img} alt={product.title} className="w-10 h-10 object-cover rounded-md" /> */}
-                          <span>{product.title}</span>
-                        </div>
-                      </a>
-                    ))
+                      <CartDelLoading />
+                    </p>
                   ) : (
-                    <p className="px-4 py-2 text-gray-500">No results found</p>
+                    searchResults.length > 0 ? (
+                      searchResults.map((product) => (
+                        <a key={product._id} href={`/product/${product._id}`} className="block px-4 py-2 boder-b hover:bg-gray-100">
+                          <div className="flex items-center space-x-3">
+                            {Array.isArray(product.img) && product.img.slice(0, 1).map((imageUrl, index) => (
+                              <img key={index} src={imageUrl} alt={product.title} className="w-10 h-10 object-cover rounded-md" />
+                            ))}
+                            <span>{product.title}</span>
+                          </div>
+                        </a>
+                      ))
+                    ) : (
+                      <p className="px-4 py-2 text-gray-500">No results found</p>
+                    )
                   )}
                 </div>
               )}

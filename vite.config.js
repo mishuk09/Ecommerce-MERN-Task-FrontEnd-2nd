@@ -13,7 +13,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/product/items': 'http://localhost:5001'
+      '/product/items': 'https://ecommerce-mern-task-backend.onrender.com'
     }
   },
   esbuild: {
